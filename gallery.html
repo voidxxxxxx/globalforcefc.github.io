@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-en="Gallery - Global Force FC" data-ne="ग्यालेरी - ग्लोबल फोर्स एफसी" data-ar="المعرض - جلوبال فورس">Gallery - Global Force FC</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .gallery-item {
+            position: relative; aspect-ratio: 4/3; background: var(--blue-card);
+            border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border);
+            cursor: pointer; transition: var(--transition);
+        }
+        .gallery-item:hover { transform: scale(1.02); border-color: var(--green); box-shadow: var(--shadow-green); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-placeholder {
+            position: absolute; inset: 0; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; color: var(--muted);
+        }
+        .gallery-overlay {
+            position: absolute; inset: 0; background: rgba(5,13,26,0.9);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; transition: var(--transition); padding: 1.5rem; text-align: center;
+        }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-overlay h4 { color: var(--white); margin-bottom: 0.5rem; }
+        .gallery-overlay p { font-size: 0.85rem; color: var(--muted); }
+        .lightbox {
+            display: none; position: fixed; inset: 0; background: rgba(5,13,26,0.98);
+            z-index: 9999; align-items: center; justify-content: center; padding: 2rem;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90%; max-height: 85vh; border-radius: var(--radius); box-shadow: var(--shadow); }
+        .lightbox-close {
+            position: absolute; top: 2rem; right: 2rem; color: var(--white);
+            font-size: 2rem; cursor: pointer; width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; background: rgba(255,255,255,0.1);
+        }
+        .lightbox-close:hover { background: var(--green); color: var(--navy); }
+        .filter-buttons { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; justify-content: center; }
+        .filter-btn {
+            padding: 0.5rem 1.25rem; border: 1px solid var(--border); background: transparent;
+            color: var(--muted); border-radius: 50px; cursor: pointer; transition: var(--transition);
+            font-family: var(--font-body); font-weight: 600; font-size: 0.85rem;
+        }
+        .filter-btn:hover, .filter-btn.active { background: var(--green); color: var(--navy); border-color: var(--green); }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-fallback">GF</div>
+        <div class="nav-logo-text">
+          <span class="club" data-en="GLOBAL FORCE FC" data-ne="ग्लोबल फोर्स एफसी" data-ar="جلوبال فورس">GLOBAL FORCE FC</span>
+          <span class="tagline" data-en="Strength in Unity" data-ne="एकतामा शक्ति" data-ar="القوة في الوحدة">Strength in Unity</span>
+        </div>
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" data-en="Home" data-ne="गृहपृष्ठ" data-ar="الرئيسية">Home</a></li>
+        <li><a href="about.html" data-en="About" data-ne="हाम्रो बारेमा" data-ar="من نحن">About</a></li>
+        <li><a href="team.html" data-en="Team" data-ne="टोली" data-ar="الفريق">Team</a></li>
+        <li><a href="schedule.html" data-en="Schedule" data-ne="तालिका" data-ar="الجدول">Schedule</a></li>
+        <li><a href="tournaments.html" data-en="Tournaments" data-ne="प्रतियोगिताहरू" data-ar="البطولات">Tournaments</a></li>
+        <li><a href="stats.html" data-en="Stats" data-ne="तथ्यांक" data-ar="إحصائيات">Stats</a></li>
+        <li><a href="membership.html" data-en="Join Us" data-ne="सामेल हुनुहोस्" data-ar="انضم إلينا">Join Us</a></li>
+        <li><a href="gallery.html" class="active" data-en="Gallery" data-ne="ग्यालेरी" data-ar="المعرض">Gallery</a></li>
+        <li><a href="contact.html" data-en="Contact" data-ne="सम्पर्क" data-ar="تواصل">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="lang-selector">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ne">NE</button>
+          <button class="lang-btn" data-lang="ar">AR</button>
+        </div>
+        <button class="nav-hamburger" id="navHamburger"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb mb-1">
+      <a href="index.html" data-en="Home" data-ne="गृहपृष्ठ" data-ar="الرئيسية">Home</a>
+      <span>/</span>
+      <span data-en="Gallery" data-ne="ग्यालेरी" data-ar="المعرض">Gallery</span>
+    </div>
+    <h1 data-en="Photo Gallery" data-ne="फोटो ग्यालेरी" data-ar="معرض الصور">Photo <span class="green">Gallery</span></h1>
+    <p data-en="Capturing moments of glory, passion, and teamwork" data-ne="गौरव, जोश र टोलीको कामको क्षणहरू कैद गर्दै" data-ar="التقاط لحظات المجد والشغف والعمل الجماعي">Capturing moments of glory, passion, and teamwork</p>
+  </div>
+</div>
+
+<!-- GALLERY CONTENT -->
+<section class="section">
+  <div class="container">
+    <div class="filter-buttons scroll-reveal">
+        <button class="filter-btn active" onclick="filterGallery('all')" data-en="All Photos" data-ne="सबै फोटोहरू" data-ar="جميع الصور">All Photos</button>
+        <button class="filter-btn" onclick="filterGallery('matches')" data-en="Matches" data-ne="खेलहरू" data-ar="المباريات">Matches</button>
+        <button class="filter-btn" onclick="filterGallery('training')" data-en="Training" data-ne="प्रशिक्षण" data-ar="التدريب">Training</button>
+        <button class="filter-btn" onclick="filterGallery('team')" data-en="Team" data-ne="टोली" data-ar="الفريق">Team</button>
+        <button class="filter-btn" onclick="filterGallery('tournaments')" data-en="Tournaments" data-ne="प्रतियोगिताहरू" data-ar="البطولات">Tournaments</button>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+        <!-- Gallery Item 1 -->
+        <div class="gallery-item scroll-reveal" data-category="tournaments" onclick="openLightbox('assets/gallery/trophy.jpg', 'Gen-Z Tournament Win', 'January 2026')">
+            <div class="gallery-placeholder">
+                <i class="fas fa-trophy" style="font-size:3rem;margin-bottom:1rem;"></i>
+                <p data-en="Trophy Photo" data-ne="ट्रफी फोटो" data-ar="صورة الكأس">Trophy Photo</p>
+                <p style="font-size:0.75rem;margin-top:0.5rem;">Click to upload or view</p>
+            </div>
+            <div class="gallery-overlay">
+                <h4 data-en="Gen-Z Tournament Win" data-ne="जेन-जेड टुर्नामेन्ट जित" data-ar="فوز بطولة جن-زد">Gen-Z Tournament Win</h4>
+                <p>January 2026</p>
+            </div>
+        </div>
+
+        <!-- Gallery Item 2 -->
+        <div class="gallery-item scroll-reveal" data-category="team" onclick="openLightbox('assets/gallery/team.jpg', 'Team Photo', 'Season 2025-26')">
+            <div class="gallery-placeholder">
+                <i class="fas fa-users" style="font-size:3rem;margin-bottom:1rem;"></i>
+                <p data-en="Team Photo" data-ne="टोली फोटो" data-ar="صورة الفريق">Team Photo</p>
+            </div>
+            <div class="gallery-overlay">
+                <h4 data-en="Team Squad" data-ne="टोली समूह" data-ar="فريق اللاعبين">Team Squad</h4>
+                <p>Season 2025-26</p>
+            </div>
+        </div>
+
+        <!-- Gallery Item 3 -->
+        <div class="gallery-item scroll-reveal" data-category="training" onclick="openLightbox('assets/gallery/training.jpg', 'Training Session', 'Barwa Ground')">
+            <div class="gallery-placeholder">
+                <i class="fas fa-running" style="font-size:3rem;margin-bottom:1rem;"></i>
+                <p data-en="Training" data-ne="प्रशिक्षण" data-ar="التدريب">Training</p>
+            </div>
+            <div class="gallery-overlay">
+                <h4 data-en="Training Session" data-ne="प्रशिक्षण सत्र" data-ar="جلسة تدريب">Training Session</h4>
+                <p>Barwa Ground</p>
+            </div>
+        </div>
+
+        <!-- Gallery Item 4 -->
+        <div class="gallery-item scroll-reveal" data-category="matches" onclick="openLightbox('assets/gallery/match1.jpg', 'vs Himalayan FC', 'Friendly Match')">
+            <div class="gallery-placeholder">
+                <i class="fas fa-futbol" style="font-size:3rem;margin-bottom:1rem;"></i>
+                <p data-en="Match Action" data-ne="खेल एक्शन" data-ar="حركة المباراة">Match Action</p>
+            </div>
+            <div class="gallery-overlay">
+                <h4>vs Himalayan FC</h4>
+                <p data-en="Friendly Match" data-ne="मैत्रीपूर्ण खेल" data-ar="مباراة ودية">Friendly Match</p>
+            </div>
+        </div>
+
+        <!-- Gallery Item 5 -->
+        <div class="gallery-item scroll-reveal" data-category="tournaments" onclick="openLightbox('assets/gallery/khasi.jpg', 'Khasi Tournament', 'Organized by GFFC')">
+            <div class="gallery-placeholder">
+                <i class="fas fa-star" style="font-size:3rem;margin-bottom:1rem;"></i>
+                <p>Khasi Tournament</p>
+            </div>
+            <div class="gallery-overlay">
+                <h4>Khasi Tournament</h4>
+                <p data-en="Organized by GFFC" data-ne="GFFC द्वारा आयोजित" data-ar="نظمتها جلوبال فورس">Organized by GFFC</p>
+            </div>
+        </div>
+
+        <!-- Gallery Item 6 -->
+        <div class="gallery-item scroll-reveal" data-category="team" onclick="openLightbox('assets/gallery/celebration.jpg', 'Victory Celebration', 'After Match')">
+            <div class="gallery-placeholder">
+                <i class="fas fa-glass-cheers" style="font-size:3rem;margin-bottom:1rem;"></i>
+                <p data-en="Celebrations" data-ne="उत्सवहरू" data-ar="الاحتفالات">Celebrations</p>
+            </div>
+            <div class="gallery-overlay">
+                <h4 data-en="Victory Celebration" data-ne="जीत उत्सव" data-ar="احتفال النصر">Victory Celebration</h4>
+                <p data-en="After Match" data-ne="खेल पछि" data-ar="بعد المباراة">After Match</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="highlight-box mt-3 scroll-reveal text-center">
+        <i class="fas fa-info-circle" style="color:var(--green);"></i>
+        <span data-en=" To add photos: Replace placeholder images in the assets/gallery/ folder, or click any photo to upload temporarily (stored in browser only)." 
+              data-ne=" फोटो थप्न: assets/gallery/ फोल्डरमा फोटो रिप्लेस गर्नुहोस्, वा अस्थायी अपलोडका लागि क्लिक गर्नुहोस्।"
+              data-ar=" لإضافة صور: استبدل الصور في مجلد assets/gallery/، أو انقر على أي صورة للتحميل المؤقت فقط.">
+              To add photos: Replace placeholder images in the assets/gallery/ folder, or click any photo to upload temporarily (stored in browser only).</span>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-close"><i class="fas fa-times"></i></div>
+    <img src="" alt="" id="lightboxImg">
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-box">
+          <div class="fallback">GF</div>
+          <div>
+            <h3>Global Force FC</h3>
+            <div class="tagline" data-en="Strength in Unity" data-ne="एकतामा शक्ति" data-ar="القوة في الوحدة">Strength in Unity</div>
+          </div>
+        </div>
+        <p>Barwa Al Baraha, Qatar · Est. 2025</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Global Force FC</span>
+      <div class="footer-flags">🇳🇵 🇶🇦</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+    // Gallery Filter
+    function filterGallery(category) {
+        const items = document.querySelectorAll('.gallery-item');
+        const buttons = document.querySelectorAll('.filter-btn');
+        
+        buttons.forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        items.forEach(item => {
+            if (category === 'all' || item.dataset.category === category) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    // Lightbox
+    function openLightbox(src, title, desc) {
+        const lightbox = document.getElementById('lightbox');
+        const img = document.getElementById('lightboxImg');
+        img.src = src;
+        img.alt = title;
+        lightbox.classList.add('active');
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+</script>
+</body>
+</html>
