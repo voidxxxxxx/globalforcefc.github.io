@@ -1,230 +1,593 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-en="Global Force FC - Strength in Unity" data-ne="ग्लोबल फोर्स एफसी - एकतामा शक्ति">Global Force FC - Strength in Unity</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
-    <base href="/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Force FC — Strength in Unity | Qatar</title>
+  <meta name="description" content="Global Force FC — A Nepali football club based in Qatar. Strength in Unity.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* HOME-PAGE SPECIFIC */
+    .hero-visual {
+      position: absolute; right: 0; top: 0; bottom: 0;
+      width: 50%; display: flex; align-items: center; justify-content: center;
+    }
+    .hero-visual-inner {
+      position: relative; width: min(420px, 40vw); height: min(420px, 40vw);
+    }
+    .hero-emblem {
+      width: 100%; height: 100%; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(0,201,110,0.15), rgba(5,13,26,0.8));
+      border: 2px solid rgba(0,201,110,0.2);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      animation: spin-slow 30s linear infinite;
+    }
+    .hero-emblem-inner {
+      width: 75%; height: 75%; border-radius: 50%;
+      background: linear-gradient(135deg, #0D1F3C, #050D1A);
+      border: 2px solid rgba(0,201,110,0.3);
+      display: flex; align-items: center; justify-content: center;
+      animation: spin-slow 30s linear reverse infinite;
+      font-family: var(--font-display);
+      text-align: center; color: var(--white);
+    }
+    .hero-emblem-inner .club-initial {
+      font-size: clamp(3rem, 6vw, 5rem); color: var(--green); line-height: 1;
+    }
+    .hero-emblem-inner .club-name { font-size: clamp(0.6rem, 1vw, 0.85rem); letter-spacing: 0.2em; color: var(--muted); }
+    @keyframes spin-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    .orbit-dot {
+      position: absolute; width: 12px; height: 12px; border-radius: 50%;
+      background: var(--green); box-shadow: 0 0 10px var(--green);
+    }
+    .orbit-dot:nth-child(2) { top: 5%; left: 50%; transform: translateX(-50%); }
+    .orbit-dot:nth-child(3) { bottom: 5%; left: 50%; transform: translateX(-50%); background: var(--gold); box-shadow: 0 0 10px var(--gold); }
+    .orbit-dot:nth-child(4) { left: 5%; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.4); }
+    .orbit-dot:nth-child(5) { right: 5%; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.4); }
+
+    /* Results section */
+    .results-row { display: flex; flex-direction: column; gap: 0.75rem; }
+    .tabs-container .tab-btns { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 0.5rem 1.25rem; border-radius: 50px; border: 1px solid var(--border);
+      background: transparent; color: var(--muted); font-family: var(--font-body);
+      font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: var(--transition);
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tab-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.2); }
+    .tab-btn.active { background: var(--green); color: var(--navy); border-color: var(--green); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Season summary */
+    .season-summary {
+      background: linear-gradient(135deg, rgba(0,201,110,0.08), rgba(0,201,110,0.02));
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 2rem; margin-bottom: 2rem;
+    }
+    .season-summary h3 { color: var(--white); margin-bottom: 1.25rem; font-size: 1.1rem; }
+    .season-bars { display: flex; flex-direction: column; gap: 0.75rem; }
+    .season-bar { }
+    .season-bar .bar-label { display: flex; justify-content: space-between; margin-bottom: 0.3rem; font-size: 0.83rem; }
+    .season-bar .bar-label .l { color: var(--muted); }
+    .season-bar .bar-label .v { color: var(--white); font-weight: 700; }
+    .bar-track { height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 4px; transition: width 1.5s cubic-bezier(0.4,0,0.2,1); width: 0; }
+    .bar-fill.green { background: linear-gradient(90deg, var(--green), var(--green-glow)); }
+    .bar-fill.gold { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+    .bar-fill.red { background: linear-gradient(90deg, #EF4444, #F87171); }
+
+    /* Welcome nations */
+    .nations-section { background: var(--blue-card); }
+    .nations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+    .nation-card {
+      border-radius: var(--radius); padding: 1.25rem 1rem; text-align: center;
+      border: 1px solid var(--border); background: var(--navy);
+      transition: var(--transition);
+    }
+    .nation-card:hover { border-color: rgba(0,201,110,0.4); transform: translateY(-3px); }
+    .nation-flag { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+    .nation-card span { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <img src="./assets/logo.png" alt="Global Force FC">
-                <span data-en="GLOBAL FORCE FC" data-ne="ग्लोबल फोर्स एफसी">GLOBAL FORCE FC</span>
-            </div>
-            
-            <div class="language-switcher">
-                <button id="langToggle" class="lang-btn">
-                    <span class="flag">🇳🇵</span>
-                    <span class="lang-text" data-en="नेपाली" data-ne="English">नेपाली</span>
-                </button>
-            </div>
-            
-            <div class="nav-toggle" id="navToggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="./index.html" class="active" data-en="Home" data-ne="गृहपृष्ठ">Home</a></li>
-                <li><a href="./about.html" data-en="About" data-ne="हाम्रो बारेमा">About</a></li>
-                <li><a href="./team.html" data-en="Teams" data-ne="टोलीहरू">Teams</a></li>
-                <li><a href="./schedule.html" data-en="Schedule" data-ne="तालिका">Schedule</a></li>
-                <li><a href="./stats.html" data-en="Statistics" data-ne="तथ्यांक">Statistics</a></li>
-                <li><a href="./membership.html" data-en="Membership" data-ne="सदस्यता">Membership</a></li>
-                <li><a href="./gallery.html" data-en="Gallery" data-ne="ग्यालेरी">Gallery</a></li>
-                <li><a href="./contact.html" data-en="Contact" data-ne="सम्पर्क">Contact</a></li>
-            </ul>
+
+<!-- ─── NAVBAR ─────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-fallback">GF</div>
+        <div class="nav-logo-text">
+          <span class="club" data-en="GLOBAL FORCE FC" data-ne="ग्लोबल फोर्स एफसी" data-ar="جلوبال فورس">GLOBAL FORCE FC</span>
+          <span class="tagline" data-en="Strength in Unity" data-ne="एकतामा शक्ति" data-ar="القوة في الوحدة">Strength in Unity</span>
         </div>
-    </nav>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1 data-en="STRENGTH IN UNITY" data-ne="एकतामा शक्ति">STRENGTH IN UNITY</h1>
-            <p class="subtitle" data-en="Qatar's Premier Nepali Football Community" data-ne="कतारको प्रमुख नेपाली फुटबल समुदाय">Qatar's Premier Nepali Football Community</p>
-            
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="number">25+</span>
-                    <span class="label" data-en="Members" data-ne="सदस्यहरू">Members</span>
-                </div>
-                <div class="stat">
-                    <span class="number">2025</span>
-                    <span class="label" data-en="Established" data-ne="स्थापित">Established</span>
-                </div>
-                <div class="stat">
-                    <span class="number">10+</span>
-                    <span class="label" data-en="Tournaments" data-ne="प्रतियोगिताहरू">Tournaments</span>
-                </div>
-            </div>
-            
-            <div class="hero-buttons">
-                <a href="./membership.html" class="btn btn-primary" data-en="Join Club" data-ne="क्लबमा सामेल हुनुहोस्">Join Club</a>
-                <a href="./schedule.html" class="btn btn-secondary" data-en="Next Match" data-ne="अर्को खेल">Next Match</a>
-            </div>
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" data-en="Home" data-ne="गृहपृष्ठ" data-ar="الرئيسية">Home</a></li>
+        <li><a href="about.html" data-en="About" data-ne="हाम्रो बारेमा" data-ar="من نحن">About</a></li>
+        <li><a href="team.html" data-en="Team" data-ne="टोली" data-ar="الفريق">Team</a></li>
+        <li><a href="schedule.html" data-en="Schedule" data-ne="तालिका" data-ar="الجدول">Schedule</a></li>
+        <li><a href="tournaments.html" data-en="Tournaments" data-ne="प्रतियोगिताहरू" data-ar="البطولات">Tournaments</a></li>
+        <li><a href="stats.html" data-en="Stats" data-ne="तथ्यांक" data-ar="إحصائيات">Stats</a></li>
+        <li><a href="membership.html" data-en="Join Us" data-ne="सामेल हुनुहोस्" data-ar="انضم إلينا">Join Us</a></li>
+        <li><a href="gallery.html" data-en="Gallery" data-ne="ग्यालेरी" data-ar="المعرض">Gallery</a></li>
+        <li><a href="contact.html" data-en="Contact" data-ne="सम्पर्क" data-ar="تواصل">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="lang-selector">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ne">NE</button>
+          <button class="lang-btn" data-lang="ar">AR</button>
         </div>
-    </section>
+        <a href="membership.html" class="btn btn-primary btn-sm nav-cta" data-en="Join Club" data-ne="क्लब सामेल हुनुहोस्" data-ar="انضم">Join Club</a>
+        <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
 
-    <section class="next-match">
-        <div class="container">
-            <h2 class="section-title" data-en="Upcoming Friendly" data-ne="आगामी मैत्रीपूर्ण खेल">Upcoming Friendly</h2>
-            <div class="match-card">
-                <div class="match-teams">
-                    <div class="team home">
-                        <img src="./assets/logo.png" alt="Global Force FC">
-                        <h3 data-en="Global Force FC" data-ne="ग्लोबल फोर्स एफसी">Global Force FC</h3>
-                    </div>
-                    <div class="vs">VS</div>
-                    <div class="team away">
-                        <div class="placeholder-logo">?</div>
-                        <h3 data-en="TBD Opponent" data-ne="प्रतिद्वन्द्वी टोली">TBD Opponent</h3>
-                    </div>
-                </div>
-                <div class="match-info">
-                    <p><i class="fas fa-calendar"></i> <span data-en="Friday, 28 Feb 2025" data-ne="शुक्रबार, २८ फेब्रुअरी २०२५">Friday, 28 Feb 2025</span></p>
-                    <p><i class="fas fa-clock"></i> 6:30 PM</p>
-                    <p><i class="fas fa-map-marker-alt"></i> <span data-en="Barwa Al Baraha Ground" data-ne="बर्वा अल बराहा मैदान">Barwa Al Baraha Ground</span></p>
-                </div>
-                <a href="./contact.html" class="btn btn-outline" data-en="Challenge Us" data-ne="हामीलाई चुनौती दिनुहोस्">Challenge Us</a>
-            </div>
+<!-- ─── TICKER ─────────────────────────────────────── -->
+<div class="ticker-bar" style="margin-top:70px;">
+  <div class="ticker-label">🔴 LIVE</div>
+  <div class="ticker-track" id="ticker">
+    <span class="ticker-item">🏆 Gen-Z 1-Day Tournament — WINNERS Jan 2026</span>
+    <span class="ticker-item">⚽ 16+ Matches Played This Season</span>
+    <span class="ticker-item">💰 QAR 2,125+ Tournament Prize & Entry Income</span>
+    <span class="ticker-item">🎉 Club Founded 2025 · Barwa Al Baraha, Qatar</span>
+    <span class="ticker-item">🤝 Open Friendly Challenges Welcome — Contact Us</span>
+    <span class="ticker-item">📋 New Members Accepted — QAR 15/month Only</span>
+  </div>
+</div>
+
+<!-- ─── HERO ───────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pitch-lines"></div>
+  <div class="hero-circle"></div>
+
+  <div class="container" style="position:relative;z-index:2;width:100%;">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-flags">🇳🇵 🇶🇦</div>
+        <span data-en="Based in Qatar · Est. 2025" data-ne="कतारमा आधारित · स्थापना २०२५" data-ar="مقرها قطر · تأسست 2025">Based in Qatar · Est. 2025</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line1" data-en="GLOBAL" data-ne="ग्लोबल" data-ar="جلوبال">GLOBAL</span>
+        <span class="line2" data-en="FORCE FC" data-ne="फोर्स एफसी" data-ar="فورس">FORCE FC</span>
+        <span class="line3" data-en="STRENGTH IN UNITY" data-ne="एकतामा शक्ति" data-ar="القوة في الوحدة">STRENGTH IN UNITY</span>
+      </h1>
+
+      <p class="hero-desc" data-en="A Nepali football club competing across Qatar. We play hard, train together, and unite communities — welcoming all nationalities to our growing family." data-ne="कतारभर प्रतिस्पर्धा गर्ने एक नेपाली फुटबल क्लब। हामी कडा खेल्छौं, सँगै प्रशिक्षण गर्छौं र समुदायलाई एकजुट गर्छौं।" data-ar="نادي كرة قدم نيبالي يتنافس في قطر. نلعب بجد، نتدرب معاً، ونوحد المجتمعات.">A Nepali football club competing across Qatar. We play hard, train together, and unite communities — welcoming all nationalities to our growing family.</p>
+
+      <div class="hero-actions">
+        <a href="membership.html" class="btn btn-primary btn-lg">
+          <i class="fas fa-futbol"></i>
+          <span data-en="Join the Club" data-ne="क्लबमा सामेल हुनुहोस्" data-ar="انضم للنادي">Join the Club</span>
+        </a>
+        <a href="schedule.html" class="btn btn-outline btn-lg">
+          <i class="fas fa-calendar"></i>
+          <span data-en="View Schedule" data-ne="तालिका हेर्नुहोस्" data-ar="الجدول">View Schedule</span>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat-item">
+          <div class="hero-stat-num"><span data-count="26">0</span></div>
+          <div class="hero-stat-label" data-en="Players" data-ne="खेलाडीहरू" data-ar="لاعبون">Players</div>
         </div>
-    </section>
-
-    <section class="quick-about">
-        <div class="container">
-            <div class="content-grid">
-                <div class="text">
-                    <h2 data-en="Pride of Nepali Football in Qatar" data-ne="कतारमा नेपाली फुटबलको गौरव">Pride of Nepali Football in Qatar</h2>
-                    <p data-en="Global Force FC brings together Nepali workers in Qatar through the beautiful game. Based in Barwa Al Baraha, we compete in 9-a-side tournaments and organize friendly matches with clubs across Qatar." 
-                       data-ne="ग्लोबल फोर्स एफसीले कतारमा रहेका नेपाली श्रमिकहरूलाई फुटबलको माध्यमबाट एकजुट गर्दछ। बर्वा अल बराहामा आधारित, हामी ९-पक्षीय प्रतियोगिताहरूमा प्रतिस्पर्धा गर्छौं र कतारभरिका क्लबहरूसँग मैत्रीपूर्ण खेलहरू आयोजना गर्छौं।">
-                       Global Force FC brings together Nepali workers in Qatar through the beautiful game. Based in Barwa Al Baraha, we compete in 9-a-side tournaments and organize friendly matches with clubs across Qatar.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> <span data-en="Professional Training Equipment" data-ne="पेशेवर प्रशिक्षण उपकरण">Professional Training Equipment</span></li>
-                        <li><i class="fas fa-check"></i> <span data-en="Two Kit Sets (Blue & Green)" data-ne="दुई किट सेट (निलो र हरियो)">Two Kit Sets (Blue & Green)</span></li>
-                        <li><i class="fas fa-check"></i> <span data-en="Weekly Practice Sessions" data-ne="साप्ताहिक प्रशिक्षण सत्र">Weekly Practice Sessions</span></li>
-                        <li><i class="fas fa-check"></i> <span data-en="Tournament Organization" data-ne="प्रतियोगिता आयोजना">Tournament Organization</span></li>
-                    </ul>
-                    <a href="./about.html" class="btn btn-primary" data-en="Learn More" data-ne="थप जानकारी">Learn More</a>
-                </div>
-                <div class="image">
-                    <div class="image-placeholder team-photo">
-                        <i class="fas fa-image"></i>
-                        <span data-en="Team Photo Here" data-ne="टोलीको फोटो यहाँ">Team Photo Here</span>
-                    </div>
-                </div>
-            </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num"><span data-count="16">0</span></div>
+          <div class="hero-stat-label" data-en="Matches Played" data-ne="खेलहरू खेलिए" data-ar="مباريات">Matches Played</div>
         </div>
-    </section>
-
-    <section class="sponsors">
-        <div class="container">
-            <h2 class="section-title" data-en="Our Sponsors" data-ne="हाम्रा प्रायोजकहरू">Our Sponsors</h2>
-            <p class="section-subtitle" data-en="Proudly supported by local Nepali businesses in Qatar" data-ne="कतारका स्थानीय नेपाली व्यवसायहरूद्वारा गौरवपूर्वक समर्थित">Proudly supported by local Nepali businesses in Qatar</p>
-            <div class="sponsor-grid">
-                <div class="sponsor-card placeholder">
-                    <h4 data-en="Your Store Here" data-ne="तपाईंको पसल यहाँ">Your Store Here</h4>
-                    <p data-en="Title Sponsor" data-ne="मुख्य प्रायोजक">Title Sponsor</p>
-                </div>
-                <div class="sponsor-card placeholder">
-                    <h4 data-en="Restaurant Name" data-ne="रेस्टुरेन्टको नाम">Restaurant Name</h4>
-                    <p data-en="Kit Sponsor" data-ne="किट प्रायोजक">Kit Sponsor</p>
-                </div>
-                <div class="sponsor-card placeholder">
-                    <h4 data-en="Business Name" data-ne="व्यवसायको नाम">Business Name</h4>
-                    <p data-en="Equipment Partner" data-ne="उपकरण साझेदार">Equipment Partner</p>
-                </div>
-            </div>
-            <div class="text-center mt-2">
-                <a href="./contact.html" class="btn btn-outline" data-en="Become a Sponsor" data-ne="प्रायोजक बन्नुहोस्">Become a Sponsor</a>
-            </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num"><span style="color:var(--gold)" data-count="3">0</span></div>
+          <div class="hero-stat-label" data-en="Tournaments Won/Hosted" data-ne="प्रतियोगिता" data-ar="بطولات">Tournaments</div>
         </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3 data-en="Global Force FC" data-ne="ग्लोबल फोर्स एफसी">Global Force FC</h3>
-                    <p><span data-en="Strength in Unity" data-ne="एकतामा शक्ति">Strength in Unity</span><br>2025</p>
-                    <div class="social-links">
-                        <a href="https://facebook.com/YOUR_PAGE" target="_blank"><i class="fab fa-facebook"></i></a>
-                        <a href="https://tiktok.com/YOUR_ACCOUNT" target="_blank"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://wa.me/974XXXXXXXX" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3 data-en="Quick Links" data-ne="द्रुत लिङ्कहरू">Quick Links</h3>
-                    <ul>
-                        <li><a href="./schedule.html" data-en="Fixtures" data-ne="खेल तालिका">Fixtures</a></li>
-                        <li><a href="./stats.html" data-en="Player Stats" data-ne="खेलाडी तथ्यांक">Player Stats</a></li>
-                        <li><a href="./membership.html" data-en="Join Us" data-ne="हामीसँग सामेल हुनुहोस्">Join Us</a></li>
-                        <li><a href="./contact.html" data-en="Contact" data-ne="सम्पर्क">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3 data-en="Contact" data-ne="सम्पर्क">Contact</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> <span data-en="Barwa Al Baraha, Qatar" data-ne="बर्वा अल बराहा, कतार">Barwa Al Baraha, Qatar</span></p>
-                    <p><i class="fas fa-clock"></i> <span data-en="Practice: Fri 6:30-7:30 PM" data-ne="प्रशिक्षण: शुक्रबार ६:३०-७:३० बजे">Practice: Fri 6:30-7:30 PM</span></p>
-                    <p><i class="fas fa-envelope"></i> secretary@globalforcefc.com</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 <span data-en="Global Force FC. All rights reserved." data-ne="ग्लोबल फोर्स एफसी। सर्वाधिकार सुरक्षित।">Global Force FC. All rights reserved.</span></p>
-            </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num"><span>QAR</span><span data-count="15">0</span></div>
+          <div class="hero-stat-label" data-en="Monthly Fee Only" data-ne="मासिक शुल्क मात्र" data-ar="رسوم شهرية">Monthly Fee Only</div>
         </div>
-    </footer>
+      </div>
+    </div>
+  </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const navToggle = document.getElementById('navToggle');
-            const navMenu = document.getElementById('navMenu');
-            
-            if (navToggle) {
-                navToggle.addEventListener('click', () => {
-                    navMenu.classList.toggle('active');
-                    const icon = navToggle.querySelector('i');
-                    if (navMenu.classList.contains('active')) {
-                        icon.classList.remove('fa-bars');
-                        icon.classList.add('fa-times');
-                    } else {
-                        icon.classList.remove('fa-times');
-                        icon.classList.add('fa-bars');
-                    }
-                });
-            }
+  <div class="hero-scroll">
+    <span data-en="Scroll" data-ne="स्क्रोल" data-ar="انزل">Scroll</span>
+    <i class="fas fa-chevron-down" style="color:var(--green)"></i>
+  </div>
+</section>
 
-            const langToggle = document.getElementById('langToggle');
-            const elements = document.querySelectorAll('[data-en][data-ne]');
-            const savedLang = localStorage.getItem('gffc-language') || 'en';
-            setLanguage(savedLang);
-            
-            if (langToggle) {
-                langToggle.addEventListener('click', function() {
-                    const currentLang = localStorage.getItem('gffc-language') || 'en';
-                    const newLang = currentLang === 'en' ? 'ne' : 'en';
-                    setLanguage(newLang);
-                    localStorage.setItem('gffc-language', newLang);
-                });
-            }
-            
-            function setLanguage(lang) {
-                elements.forEach(element => {
-                    element.textContent = element.getAttribute('data-' + lang);
-                });
-                const flag = langToggle.querySelector('.flag');
-                if (lang === 'ne') {
-                    flag.textContent = '🇬🇧';
-                    document.body.classList.add('nepali');
-                } else {
-                    flag.textContent = '🇳🇵';
-                    document.body.classList.remove('nepali');
-                }
-            }
-        });
-    </script>
+<!-- ─── OVERVIEW STRIP ─────────────────────────────── -->
+<div class="overview-strip scroll-reveal">
+  <div class="container">
+    <div class="overview-grid">
+      <div class="overview-item">
+        <div class="icon">⚽</div>
+        <div class="num" data-count="16">0</div>
+        <div class="label" data-en="Matches Played" data-ne="खेलिएका खेलहरू" data-ar="مباريات">Matches Played</div>
+      </div>
+      <div class="overview-item">
+        <div class="icon">🏆</div>
+        <div class="num" data-count="3">0</div>
+        <div class="label" data-en="Tournaments" data-ne="प्रतियोगिताहरू" data-ar="بطولات">Tournaments</div>
+      </div>
+      <div class="overview-item">
+        <div class="icon">👥</div>
+        <div class="num" data-count="26">0</div>
+        <div class="label" data-en="Active Members" data-ne="सक्रिय सदस्यहरू" data-ar="أعضاء">Active Members</div>
+      </div>
+      <div class="overview-item">
+        <div class="icon">📅</div>
+        <div class="num">2025</div>
+        <div class="label" data-en="Year Founded" data-ne="स्थापना वर्ष" data-ar="تأسست">Year Founded</div>
+      </div>
+      <div class="overview-item">
+        <div class="icon">📍</div>
+        <div class="num" style="font-size:1.2rem;color:var(--muted)">Qatar</div>
+        <div class="label" data-en="Barwa Al Baraha" data-ne="बर्वा अल बराहा" data-ar="برواء البراهة">Barwa Al Baraha</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FLAGS & IDENTITY ───────────────────────────── -->
+<section class="section-sm flags-section scroll-reveal" style="background:var(--blue-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <p style="font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;" data-en="REPRESENTING" data-ne="प्रतिनिधित्व" data-ar="نمثل">REPRESENTING</p>
+    <div class="flags-row">
+      <div class="flag-item">
+        <!-- Nepal Flag SVG -->
+        <svg class="flag-svg" viewBox="0 0 90 110" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="0,0 90,55 0,110" fill="#003893"/>
+          <polygon points="0,0 80,50 0,100" fill="#DC143C"/>
+          <polygon points="0,0 65,40 0,80" fill="#003893"/>
+          <polygon points="0,0 55,35 0,70" fill="#DC143C"/>
+          <!-- Moon symbol -->
+          <path d="M15,28 Q25,35 15,42 Q20,35 15,28Z" fill="white" opacity="0.9"/>
+          <circle cx="22" cy="35" r="4" fill="none" stroke="white" stroke-width="1.5" opacity="0.9"/>
+        </svg>
+        <span data-en="Nepal 🇳🇵" data-ne="नेपाल 🇳🇵" data-ar="نيبال 🇳🇵">Nepal 🇳🇵</span>
+      </div>
+      <div class="flag-connector">✕</div>
+      <div class="flag-item">
+        <!-- Qatar Flag SVG -->
+        <svg class="flag-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="100" fill="#8D1B3D"/>
+          <path d="M0,0 L55,0 L45,10 L55,20 L45,30 L55,40 L45,50 L55,60 L45,70 L55,80 L45,90 L55,100 L0,100Z" fill="white"/>
+        </svg>
+        <span data-en="Qatar 🇶🇦" data-ne="कतार 🇶🇦" data-ar="قطر 🇶🇦">Qatar 🇶🇦</span>
+      </div>
+      <div class="flag-connector" style="color:var(--muted)">—</div>
+      <div class="flag-item">
+        <div style="width:80px;height:50px;border-radius:6px;background:linear-gradient(135deg,var(--blue),var(--green-dark));display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+          <span style="font-family:var(--font-display);font-size:0.85rem;letter-spacing:0.1em;color:var(--white)">GFFC</span>
+        </div>
+        <span data-en="Global Force FC" data-ne="ग्लोबल फोर्स" data-ar="جلوبال فورس">Global Force FC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── KIT / JERSEY DISPLAY ───────────────────────── -->
+<section class="section kit-section scroll-reveal">
+  <div class="container">
+    <div class="section-header">
+      <div class="line"></div>
+      <h2 data-en="Club Kit" data-ne="क्लब किट" data-ar="زي النادي">Club <span class="green">Kit</span></h2>
+      <p data-en="Official 2025 season uniforms — two full kit sets included with membership" data-ne="आधिकारिक २०२५ सिजन वर्दी — सदस्यतामा दुई पूर्ण किट सेट" data-ar="الزي الرسمي لموسم 2025">Official 2025 season uniforms — two full kit sets included with membership</p>
+    </div>
+    <div class="kit-grid">
+      <!-- Home Kit - Blue -->
+      <div class="kit-card scroll-reveal">
+        <div class="kit-card-img" style="background:linear-gradient(135deg,#0A1A32,#050D1A);">
+          <svg class="jersey-svg" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="blueJersey" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#1A3A6B"/>
+                <stop offset="100%" stop-color="#0A1F45"/>
+              </linearGradient>
+            </defs>
+            <!-- Jersey body -->
+            <path d="M60,30 L30,50 L20,90 L50,95 L50,220 L150,220 L150,95 L180,90 L170,50 L140,30 Q120,15 100,20 Q80,15 60,30Z" fill="url(#blueJersey)"/>
+            <!-- Collar -->
+            <path d="M80,25 Q100,35 120,25 L115,40 Q100,50 85,40Z" fill="#0D2348"/>
+            <!-- Sleeve stripes - Green -->
+            <rect x="20" y="52" width="30" height="4" fill="#00C96E" rx="2"/>
+            <rect x="150" y="52" width="30" height="4" fill="#00C96E" rx="2"/>
+            <!-- Side stripes -->
+            <rect x="50" y="95" width="6" height="125" fill="#00C96E" rx="2"/>
+            <rect x="144" y="95" width="6" height="125" fill="#00C96E" rx="2"/>
+            <!-- Club initial on chest -->
+            <text x="100" y="140" font-family="sans-serif" font-weight="900" font-size="32" fill="rgba(255,255,255,0.15)" text-anchor="middle">GF</text>
+            <!-- Number -->
+            <text x="100" y="185" font-family="sans-serif" font-weight="900" font-size="40" fill="rgba(255,255,255,0.08)" text-anchor="middle">FC</text>
+          </svg>
+        </div>
+        <div class="kit-card-body">
+          <span class="kit-type-badge home" data-en="Home Kit" data-ne="घरेलु किट" data-ar="الزي الرئيسي">Home Kit</span>
+          <h4 data-en="Blue Jersey" data-ne="निलो जर्सी" data-ar="القميص الأزرق">Blue Jersey</h4>
+          <p data-en="Deep navy with green accents — our primary match strip" data-ne="हरियो उच्चारण सहित गाढा नेभी — हाम्रो प्राथमिक खेल स्ट्रिप" data-ar="كحلي داكن مع لمسات خضراء">Deep navy with green accents — our primary match strip</p>
+        </div>
+      </div>
+
+      <!-- Away Kit - Green -->
+      <div class="kit-card scroll-reveal">
+        <div class="kit-card-img" style="background:linear-gradient(135deg,#003D22,#001A0E);">
+          <svg class="jersey-svg" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="greenJersey" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00C96E"/>
+                <stop offset="100%" stop-color="#007A42"/>
+              </linearGradient>
+            </defs>
+            <path d="M60,30 L30,50 L20,90 L50,95 L50,220 L150,220 L150,95 L180,90 L170,50 L140,30 Q120,15 100,20 Q80,15 60,30Z" fill="url(#greenJersey)"/>
+            <path d="M80,25 Q100,35 120,25 L115,40 Q100,50 85,40Z" fill="#004D2A"/>
+            <!-- Sleeve stripes - Blue -->
+            <rect x="20" y="52" width="30" height="4" fill="#1A3A6B" rx="2"/>
+            <rect x="150" y="52" width="30" height="4" fill="#1A3A6B" rx="2"/>
+            <rect x="50" y="95" width="6" height="125" fill="#004D2A" rx="2"/>
+            <rect x="144" y="95" width="6" height="125" fill="#004D2A" rx="2"/>
+            <text x="100" y="140" font-family="sans-serif" font-weight="900" font-size="32" fill="rgba(0,0,0,0.12)" text-anchor="middle">GF</text>
+            <text x="100" y="185" font-family="sans-serif" font-weight="900" font-size="40" fill="rgba(0,0,0,0.08)" text-anchor="middle">FC</text>
+          </svg>
+        </div>
+        <div class="kit-card-body">
+          <span class="kit-type-badge away" data-en="Away Kit" data-ne="बाहिरी किट" data-ar="الزي البديل">Away Kit</span>
+          <h4 data-en="Green Jersey" data-ne="हरियो जर्सी" data-ar="القميص الأخضر">Green Jersey</h4>
+          <p data-en="Vibrant green with navy accents — our away & training strip" data-ne="नेभी उच्चारण सहित प्राणबद्ध हरियो — हाम्रो बाहिरी किट" data-ar="أخضر حيوي مع لمسات داكنة">Vibrant green with navy accents — our away &amp; training strip</p>
+        </div>
+      </div>
+
+      <!-- Club Polo -->
+      <div class="kit-card scroll-reveal">
+        <div class="kit-card-img" style="background:linear-gradient(135deg,#1A1200,#0D0A00);">
+          <svg class="jersey-svg" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="poloGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#1A1A1A"/>
+                <stop offset="100%" stop-color="#0A0A0A"/>
+              </linearGradient>
+            </defs>
+            <!-- Polo shirt shape (slightly different cut) -->
+            <path d="M65,35 L35,55 L25,90 L52,95 L52,220 L148,220 L148,95 L175,90 L165,55 L135,35 Q115,22 100,26 Q85,22 65,35Z" fill="url(#poloGrad)"/>
+            <!-- Polo collar with buttons -->
+            <path d="M82,28 Q100,20 118,28 L112,48 Q100,56 88,48Z" fill="#222"/>
+            <rect x="97" y="32" width="6" height="20" fill="#111" rx="1"/>
+            <circle cx="100" cy="36" r="2" fill="#FFB800"/>
+            <circle cx="100" cy="43" r="2" fill="#FFB800"/>
+            <!-- Gold side stripes -->
+            <rect x="52" y="95" width="5" height="125" fill="#FFB800" rx="2"/>
+            <rect x="143" y="95" width="5" height="125" fill="#FFB800" rx="2"/>
+            <!-- Embroidered badge area -->
+            <rect x="75" y="90" width="50" height="40" rx="6" fill="rgba(255,184,0,0.1)" stroke="#FFB800" stroke-width="1"/>
+            <text x="100" y="116" font-family="sans-serif" font-weight="900" font-size="16" fill="#FFB800" text-anchor="middle">GFFC</text>
+          </svg>
+        </div>
+        <div class="kit-card-body">
+          <span class="kit-type-badge polo" data-en="Club Polo" data-ne="क्लब पोलो" data-ar="بولو النادي">Club Polo</span>
+          <h4 data-en="Club Polo T-Shirt" data-ne="क्लब पोलो टी-शर्ट" data-ar="قميص بولو">Club Polo T-Shirt</h4>
+          <p data-en="Black polo with gold GFFC emblem — for events, travel & casual wear" data-ne="सुनौलो GFFC प्रतीक सहित कालो पोलो" data-ar="بولو أسود مع شعار ذهبي">Black polo with gold GFFC emblem — for events, travel &amp; casual wear</p>
+        </div>
+      </div>
+    </div>
+    <p class="text-center mt-2" style="font-size:0.85rem;color:var(--muted);">
+      <i class="fas fa-info-circle" style="color:var(--green)"></i>
+      <span data-en=" Both jersey sets + polo included FREE with membership. QAR 15/month only." data-ne=" दुवै जर्सी सेट + पोलो सदस्यतामा निःशुल्क सामेल। QAR 15/महिना मात्र।" data-ar=" مجموعتا قميص + بولو مجانية مع العضوية. 15 ريال فقط/شهرياً."> Both jersey sets + polo included FREE with membership. QAR 15/month only.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ─── RECENT RESULTS ─────────────────────────────── -->
+<section class="section scroll-reveal" style="background:var(--blue-card);border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-header">
+      <div class="line"></div>
+      <h2 data-en="Recent Results" data-ne="भर्खरका नतिजाहरू" data-ar="النتائج الأخيرة">Recent <span class="green">Results</span></h2>
+    </div>
+
+    <!-- Season summary bar -->
+    <div class="season-summary">
+      <h3 data-en="Season 2025–26 Overview" data-ne="सिजन २०२५–२६ अवलोकन" data-ar="ملخص موسم 2025-26">Season 2025–26 Overview</h3>
+      <div class="season-bars">
+        <div class="season-bar">
+          <div class="bar-label"><span class="l" data-en="Wins" data-ne="जितहरू" data-ar="فوز">Wins</span><span class="v">8</span></div>
+          <div class="bar-track"><div class="bar-fill green revealed" style="width:53%"></div></div>
+        </div>
+        <div class="season-bar">
+          <div class="bar-label"><span class="l" data-en="Draws" data-ne="बराबरी" data-ar="تعادل">Draws</span><span class="v">4</span></div>
+          <div class="bar-track"><div class="bar-fill gold revealed" style="width:27%"></div></div>
+        </div>
+        <div class="season-bar">
+          <div class="bar-label"><span class="l" data-en="Losses" data-ne="हारहरू" data-ar="خسارة">Losses</span><span class="v">2</span></div>
+          <div class="bar-track"><div class="bar-fill red revealed" style="width:13%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-row">
+      <div class="result-card">
+        <div class="result-date"><div class="day">18</div><div class="month">JAN</div></div>
+        <div class="result-teams"><div class="match">Global Force FC vs Dynamo FC Veterans</div><div class="type" data-en="Friendly · Money Match" data-ne="मैत्रीपूर्ण" data-ar="ودية">Friendly · Money Match</div></div>
+        <div class="result-score" style="color:var(--muted)">— vs —</div>
+        <span class="result-outcome outcome-l" data-en="LOST" data-ne="हार" data-ar="خسارة">LOST</span>
+      </div>
+      <div class="result-card">
+        <div class="result-date"><div class="day">12</div><div class="month">JAN</div></div>
+        <div class="result-teams"><div class="match" data-en="Gen-Z 1-Day Tournament" data-ne="जेन-जेड १-दिने प्रतियोगिता" data-ar="بطولة يوم واحد">Gen-Z 1-Day Tournament</div><div class="type" data-en="Tournament · Multi-Team" data-ne="प्रतियोगिता" data-ar="بطولة">Tournament · Multi-Team</div></div>
+        <div class="result-score" style="color:var(--gold)">🏆</div>
+        <span class="result-outcome outcome-w" data-en="WINNERS" data-ne="विजेता" data-ar="بطل">WINNERS</span>
+      </div>
+      <div class="result-card">
+        <div class="result-date"><div class="day">11</div><div class="month">JAN</div></div>
+        <div class="result-teams"><div class="match">Global Force FC vs N.Y.F.C</div><div class="type" data-en="Friendly · Money Match" data-ne="मैत्रीपूर्ण" data-ar="ودية">Friendly · Money Match</div></div>
+        <div class="result-score" style="color:var(--green)">WIN</div>
+        <span class="result-outcome outcome-w" data-en="QAR 50" data-ne="QAR ५०" data-ar="50 ريال">QAR 50</span>
+      </div>
+      <div class="result-card">
+        <div class="result-date"><div class="day">8</div><div class="month">JAN</div></div>
+        <div class="result-teams"><div class="match" data-en="Khasi 1-Day Tournament (Organized)" data-ne="खसी १-दिने प्रतियोगिता (आयोजित)" data-ar="بطولة الخاسي">Khasi 1-Day Tournament (Organized)</div><div class="type" data-en="Tournament Host" data-ne="प्रतियोगिता आयोजक" data-ar="مستضيف">Tournament Host</div></div>
+        <div class="result-score" style="color:var(--gold)">HOST</div>
+        <span class="result-outcome outcome-h" data-en="QAR 1,225" data-ne="QAR १,२२५" data-ar="1,225 ريال">QAR 1,225</span>
+      </div>
+      <div class="result-card">
+        <div class="result-date"><div class="day">20</div><div class="month">NOV</div></div>
+        <div class="result-teams"><div class="match">Global Force FC vs Sunsari FC</div><div class="type" data-en="Friendly · Money Match" data-ne="मैत्रीपूर्ण" data-ar="ودية">Friendly · Money Match</div></div>
+        <div class="result-score" style="color:var(--green)">WIN</div>
+        <span class="result-outcome outcome-w" data-en="QAR 200" data-ne="QAR २००" data-ar="200 ريال">QAR 200</span>
+      </div>
+    </div>
+    <div class="text-center mt-2">
+      <a href="schedule.html" class="btn btn-outline" data-en="All Results & Fixtures →" data-ne="सबै नतिजाहरू →" data-ar="جميع النتائج →">All Results &amp; Fixtures →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WELCOME ALL NATIONS ────────────────────────── -->
+<section class="section nations-section scroll-reveal">
+  <div class="container">
+    <div class="section-header">
+      <div class="line"></div>
+      <h2 data-en="Open to All Nations" data-ne="सबै राष्ट्रहरूका लागि खुला" data-ar="مفتوح لجميع الجنسيات">Open to <span class="green">All Nations</span></h2>
+      <p data-en="Currently a Nepali community club — but our doors are open. We welcome players of ALL nationalities for friendlies, events, and soon, full membership." data-ne="हाल एक नेपाली सामुदायिक क्लब — तर हाम्रा ढोकाहरू खुला छन्। हामी मैत्रीपूर्ण खेलहरू, कार्यक्रमहरू र चाँडै पूर्ण सदस्यताको लागि सबै राष्ट्रहरूका खेलाडीहरूलाई स्वागत गर्छौं।" data-ar="ناد مجتمع نيبالي حالياً — لكن أبوابنا مفتوحة لجميع الجنسيات.">Currently a Nepali community club — but our doors are open. We welcome players of ALL nationalities for friendlies, events, and soon, full membership.</p>
+    </div>
+    <div class="nations-grid">
+      <div class="nation-card"><span class="nation-flag">🇳🇵</span><span data-en="Nepal" data-ne="नेपाल" data-ar="نيبال">Nepal</span></div>
+      <div class="nation-card"><span class="nation-flag">🇶🇦</span><span data-en="Qatar" data-ne="कतार" data-ar="قطر">Qatar</span></div>
+      <div class="nation-card"><span class="nation-flag">🇮🇳</span><span data-en="India" data-ne="भारत" data-ar="الهند">India</span></div>
+      <div class="nation-card"><span class="nation-flag">🇵🇰</span><span data-en="Pakistan" data-ne="पाकिस्तान" data-ar="باكستان">Pakistan</span></div>
+      <div class="nation-card"><span class="nation-flag">🇧🇩</span><span data-en="Bangladesh" data-ne="बंगलादेश" data-ar="بنغلاديش">Bangladesh</span></div>
+      <div class="nation-card"><span class="nation-flag">🇵🇭</span><span data-en="Philippines" data-ne="फिलिपिन्स" data-ar="الفلبين">Philippines</span></div>
+      <div class="nation-card"><span class="nation-flag">🇱🇰</span><span data-en="Sri Lanka" data-ne="श्रीलंका" data-ar="سريلانكا">Sri Lanka</span></div>
+      <div class="nation-card"><span class="nation-flag">🌍</span><span data-en="+ More!" data-ne="+ थप!" data-ar="+ المزيد!">+ More!</span></div>
+    </div>
+    <div class="highlight-box mt-2">
+      <p style="color:var(--white);font-size:0.95rem;">
+        <i class="fas fa-globe" style="color:var(--green);margin-right:0.5rem;"></i>
+        <strong data-en="Future Vision:" data-ne="भविष्यको दृष्टिकोण:" data-ar="رؤية المستقبل:">Future Vision:</strong>
+        <span data-en=" We aim to build Qatar's most diverse community football club — organizing multi-national tournaments, corporate events, and leagues open to all expat communities." data-ne=" हामी कतारको सबैभन्दा विविध सामुदायिक फुटबल क्लब बनाउने लक्ष्य राख्छौं।" data-ar=" نهدف إلى بناء أكثر نادي كرة قدم مجتمعي تنوعاً في قطر."> We aim to build Qatar's most diverse community football club — organizing multi-national tournaments, corporate events, and leagues open to all expat communities.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SPONSOR PREVIEW ────────────────────────────── -->
+<section class="section sponsor-section scroll-reveal">
+  <div class="container">
+    <div class="section-header">
+      <div class="line"></div>
+      <h2 data-en="Partner With Us" data-ne="हामीसँग साझेदारी गर्नुहोस्" data-ar="كن شريكنا">Partner <span class="green">With Us</span></h2>
+      <p data-en="Reach the Nepali & expat community in Qatar. We are actively seeking sponsors for our growing club." data-ne="कतारमा नेपाली र प्रवासी समुदायमा पुग्नुहोस्। हामी प्रायोजकहरू खोजिरहेका छौं।" data-ar="تواصل مع المجتمع النيبالي في قطر. نبحث عن رعاة للنادي.">Reach the Nepali &amp; expat community in Qatar. We are actively seeking sponsors for our growing club.</p>
+    </div>
+    <div class="sponsor-tiers">
+      <div class="sponsor-tier gold-tier scroll-reveal">
+        <div class="tier-label" data-en="🥇 Gold Partner" data-ne="🥇 गोल्ड साझेदार" data-ar="🥇 الشريك الذهبي">🥇 Gold Partner</div>
+        <div class="tier-amount">QAR 2,000<span style="font-size:1rem;color:var(--muted);font-family:var(--font-body)">/season</span></div>
+        <div class="sponsor-perks">
+          <div class="sponsor-perk"><i class="fas fa-check"></i> <span data-en="Logo on all jerseys" data-ne="सबै जर्सीमा लोगो" data-ar="شعار على القمصان">Logo on all jerseys</span></div>
+          <div class="sponsor-perk"><i class="fas fa-check"></i> <span data-en="Banner at all matches & events" data-ne="सबै खेल र कार्यक्रममा ब्यानर" data-ar="لافتة في المباريات">Banner at all matches &amp; events</span></div>
+          <div class="sponsor-perk"><i class="fas fa-check"></i> <span data-en="Social media features (500+ followers)" data-ne="सोशल मिडिया फिचर" data-ar="ميزات على التواصل الاجتماعي">Social media features (500+ followers)</span></div>
+          <div class="sponsor-perk"><i class="fas fa-check"></i> <span data-en="Tournament naming rights" data-ne="टुर्नामेन्ट नामकरण अधिकार" data-ar="حقوق تسمية البطولة">Tournament naming rights</span></div>
+        </div>
+      </div>
+      <div class="sponsor-tier silver-tier scroll-reveal">
+        <div class="tier-label" data-en="🥈 Silver Partner" data-ne="🥈 सिल्भर साझेदार" data-ar="🥈 الشريك الفضي">🥈 Silver Partner</div>
+        <div class="tier-amount">QAR 1,000<span style="font-size:1rem;color:var(--muted);font-family:var(--font-body)">/season</span></div>
+        <div class="sponsor-perks">
+          <div class="sponsor-perk"><i class="fas fa-check"></i> <span data-en="Logo on polo/training kit" data-ne="पोलो/ट्रेनिङ किटमा लोगो" data-ar="شعار على زي التدريب">Logo on polo/training kit</span></div>
+          <div class="sponsor-perk"><i class="fas fa-check"></i> <span data-en="Banner at home matches" data-ne="घरेलु खेलमा ब्यानर" data-ar="لافتة في المباريات الرئيسية">Banner at home matches</span></div>
+          <div class="sponsor-perk"><i class="fas fa-check"></i> <span data-en="Social media shoutouts" data-ne="सोशल मिडिया उल्लेख" data-ar="ذكر على التواصل الاجتماعي">Social media shoutouts</span></div>
+        </div>
+      </div>
+      <div class="sponsor-tier bronze-tier scroll-reveal">
+        <div class="tier-label" data-en="🥉 Bronze Partner" data-ne="🥉 ब्रोन्ज साझेदार" data-ar="🥉 الشريك البرونزي">🥉 Bronze Partner</div>
+        <div class="tier-amount">QAR 500<span style="font-size:1rem;color:var(--muted);font-family:var(--font-body)">/season</span></div>
+        <div class="sponsor-perks">
+          <div class="sponsor-perk"><i class="fas fa-check"></i> <span data-en="Website & social media listing" data-ne="वेबसाइट र सोशल मिडिया सूचीकरण" data-ar="إدراج على الموقع والتواصل">Website &amp; social media listing</span></div>
+          <div class="sponsor-perk"><i class="fas fa-check"></i> <span data-en="Logo on event banners" data-ne="इभेन्ट ब्यानरमा लोगो" data-ar="شعار على لافتات الفعاليات">Logo on event banners</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <a href="contact.html" class="btn btn-gold btn-lg">
+        <i class="fas fa-handshake"></i>
+        <span data-en="Become a Sponsor" data-ne="प्रायोजक बन्नुहोस्" data-ar="كن راعياً">Become a Sponsor</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ──────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-box">
+          <div class="fallback">GF</div>
+          <div>
+            <h3>Global Force FC</h3>
+            <div class="tagline" data-en="Strength in Unity" data-ne="एकतामा शक्ति" data-ar="القوة في الوحدة">Strength in Unity</div>
+          </div>
+        </div>
+        <p data-en="A Nepali football club based in Barwa Al Baraha, Qatar. Training every Friday. Open to all nationalities." data-ne="बर्वा अल बराहा, कतारमा आधारित नेपाली फुटबल क्लब। हरेक शुक्रबार प्रशिक्षण।" data-ar="نادي كرة قدم نيبالي في برواء البراهة، قطر.">A Nepali football club based in Barwa Al Baraha, Qatar. Training every Friday. Open to all nationalities.</p>
+        <div class="social-links">
+          <a href="https://facebook.com/YOUR_PAGE" target="_blank" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://tiktok.com/YOUR_ACCOUNT" target="_blank" class="social-link" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://wa.me/974XXXXXXXX" target="_blank" class="social-link" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://instagram.com/YOUR_ACCOUNT" target="_blank" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 data-en="Quick Links" data-ne="द्रुत लिङ्क" data-ar="روابط">Quick Links</h4>
+        <div class="footer-links">
+          <a href="team.html" data-en="Our Team" data-ne="हाम्रो टोली" data-ar="فريقنا">Our Team</a>
+          <a href="schedule.html" data-en="Fixtures & Results" data-ne="खेल तालिका" data-ar="المباريات">Fixtures &amp; Results</a>
+          <a href="tournaments.html" data-en="Tournaments" data-ne="प्रतियोगिताहरू" data-ar="البطولات">Tournaments</a>
+          <a href="stats.html" data-en="Player Stats" data-ne="खेलाडी तथ्यांक" data-ar="إحصائيات">Player Stats</a>
+          <a href="gallery.html" data-en="Photo Gallery" data-ne="फोटो ग्यालेरी" data-ar="المعرض">Photo Gallery</a>
+        </div>
+      </div>
+      <div>
+        <h4 data-en="Club" data-ne="क्लब" data-ar="النادي">Club</h4>
+        <div class="footer-links">
+          <a href="about.html" data-en="About Us" data-ne="हाम्रो बारेमा" data-ar="من نحن">About Us</a>
+          <a href="membership.html" data-en="Join the Club" data-ne="क्लबमा सामेल हुनुहोस्" data-ar="انضم">Join the Club</a>
+          <a href="contact.html" data-en="Challenge Us" data-ne="हामीलाई चुनौती दिनुहोस्" data-ar="تحدنا">Challenge Us</a>
+          <a href="contact.html" data-en="Become a Sponsor" data-ne="प्रायोजक बन्नुहोस्" data-ar="كن راعياً">Become a Sponsor</a>
+        </div>
+      </div>
+      <div>
+        <h4 data-en="Contact" data-ne="सम्पर्क" data-ar="تواصل">Contact</h4>
+        <div class="footer-contact-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span data-en="Barwa Al Baraha, Qatar" data-ne="बर्वा अल बराहा, कतार" data-ar="برواء البراهة، قطر">Barwa Al Baraha, Qatar</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fas fa-clock"></i>
+          <span data-en="Training: Every Friday 6:30–7:30 PM" data-ne="प्रशिक्षण: हरेक शुक्रबार ६:३०–७:३० बजे" data-ar="تدريب: الجمعة 6:30–7:30 مساءً">Training: Every Friday 6:30–7:30 PM</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fas fa-envelope"></i>
+          <span>secretary@globalforcefc.com</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fab fa-whatsapp"></i>
+          <span data-en="WhatsApp Secretary" data-ne="सचिवलाई व्हाट्सएप" data-ar="واتساب السكرتير">WhatsApp Secretary</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-en="© 2025 Global Force FC · All rights reserved" data-ne="© २०२५ ग्लोबल फोर्स एफसी · सर्वाधिकार सुरक्षित" data-ar="© 2025 جلوبال فورس · جميع الحقوق محفوظة">© 2025 Global Force FC · All rights reserved</span>
+      <div class="footer-flags">🇳🇵 🇶🇦</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
 </body>
 </html>
