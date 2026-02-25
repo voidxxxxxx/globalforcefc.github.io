@@ -1,80 +1,212 @@
-// Global Force FC - Main JavaScript
+// ═══════════════════════════════════════════════
+//  GLOBAL FORCE FC — MAIN.JS
+// ═══════════════════════════════════════════════
 
-// Mobile Navigation Toggle
-const navToggle = document.getElementById('navToggle');
-const navMenu = document.getElementById('navMenu');
+'use strict';
 
-if (navToggle) {
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        
-        // Change icon
-        const icon = navToggle.querySelector('i');
-        if (navMenu.classList.contains('active')) {
-            icon.classList.remove('fa-bars');
-            icon.classList.add('fa-times');
-        } else {
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
-        }
-    });
+// ─── LANGUAGE SYSTEM ────────────────────────────
+const LANG_KEY = 'gffc_lang';
+let currentLang = localStorage.getItem(LANG_KEY) || 'en';
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem(LANG_KEY, lang);
+  document.body.classList.remove('lang-en', 'lang-ne', 'lang-ar');
+  document.body.classList.add('lang-' + lang);
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const txt = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
+    if (txt) el.textContent = txt;
+  });
+  document.querySelectorAll('[data-placeholder-en]').forEach(el => {
+    const txt = el.getAttribute('data-placeholder-' + lang) || el.getAttribute('data-placeholder-en');
+    if (txt) el.placeholder = txt;
+  });
+
+  // Update active lang button
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
 }
 
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        const icon = navToggle.querySelector('i');
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
-    });
-});
+function initLanguage() {
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+  });
+  applyLanguage(currentLang);
+}
 
-// Gallery Filter (Simple version)
-const filterBtns = document.querySelectorAll('.filter-btn');
-const galleryItems = document.querySelectorAll('.gallery-item');
+// ─── NAVBAR ──────────────────────────────────────
+function initNavbar() {
+  const navbar = document.querySelector('.navbar');
+  const hamburger = document.getElementById('navHamburger');
+  const navMenu = document.getElementById('navMenu');
 
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Remove active class from all buttons
-        filterBtns.forEach(b => b.classList.remove('active'));
-        // Add active class to clicked button
-        btn.classList.add('active');
-        
-        const filter = btn.getAttribute('data-filter');
-        
-        galleryItems.forEach(item => {
-            if (filter === 'all' || item.classList.contains(filter)) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    });
-});
+  window.addEventListener('scroll', () => {
+    navbar?.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
 
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// Add scroll effect to navbar
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-    } else {
-        navbar.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+  hamburger?.addEventListener('click', () => {
+    navMenu?.classList.toggle('open');
+    const icon = hamburger.querySelector('i');
+    if (icon) {
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
     }
-});
+  });
 
-console.log('Global Force FC website loaded - Strength in Unity!');
+  navMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('open');
+      const icon = hamburger?.querySelector('i');
+      icon?.classList.remove('fa-times');
+      icon?.classList.add('fa-bars');
+    });
+  });
+
+  // Active link
+  const path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-menu a').forEach(a => {
+    const href = a.getAttribute('href')?.split('/').pop();
+    if (href === path) a.classList.add('active');
+  });
+}
+
+// ─── SCROLL REVEAL ───────────────────────────────
+function initScrollReveal() {
+  const els = document.querySelectorAll('.scroll-reveal');
+  if (!els.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
+}
+
+// ─── TICKER DUPLICATION ──────────────────────────
+function initTicker() {
+  const track = document.querySelector('.ticker-track');
+  if (!track) return;
+  track.innerHTML += track.innerHTML;
+}
+
+// ─── COUNTER ANIMATION ───────────────────────────
+function animateCounter(el, target, duration = 1500) {
+  let start = 0;
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * target);
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+function initCounters() {
+  const counters = document.querySelectorAll('[data-count]');
+  if (!counters.length) return;
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateCounter(e.target, parseInt(e.target.dataset.count));
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => io.observe(c));
+}
+
+// ─── TAB SYSTEM ──────────────────────────────────
+function initTabs() {
+  document.querySelectorAll('.tabs-container').forEach(container => {
+    const tabs = container.querySelectorAll('.tab-btn');
+    const panels = container.querySelectorAll('.tab-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        container.querySelector('#' + tab.dataset.tab)?.classList.add('active');
+      });
+    });
+  });
+}
+
+// ─── PHOTO UPLOAD PLACEHOLDER ────────────────────
+function initPhotoUpload() {
+  document.querySelectorAll('.photo-upload-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file'; input.accept = 'image/*';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const img = btn.closest('.player-photo').querySelector('img') || document.createElement('img');
+          img.src = ev.target.result;
+          img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:top;position:absolute;inset:0';
+          btn.closest('.player-photo').appendChild(img);
+          btn.closest('.player-photo').querySelector('.player-photo-placeholder')?.remove();
+          btn.remove();
+        };
+        reader.readAsDataURL(file);
+      };
+      input.click();
+    });
+  });
+}
+
+// ─── SMOOTH SCROLL ───────────────────────────────
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+}
+
+// ─── FORM HANDLING ───────────────────────────────
+function initForms() {
+  document.querySelectorAll('form[data-ajax]').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('[type=submit]');
+      const oldText = btn.textContent;
+      btn.textContent = '...Sending'; btn.disabled = true;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST', body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          btn.textContent = '✓ Sent!'; btn.style.background = '#00C96E';
+          form.reset();
+        } else { btn.textContent = 'Error — try again'; btn.style.background = '#EF4444'; }
+      } catch { btn.textContent = 'Error — try again'; btn.style.background = '#EF4444'; }
+      setTimeout(() => { btn.textContent = oldText; btn.disabled = false; btn.style.background = ''; }, 3000);
+    });
+  });
+}
+
+// ─── INIT ────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  initNavbar();
+  initLanguage();
+  initScrollReveal();
+  initTicker();
+  initCounters();
+  initTabs();
+  initPhotoUpload();
+  initSmoothScroll();
+  initForms();
+});
