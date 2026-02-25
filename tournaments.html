@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-en="Tournaments — Global Force FC" data-ne="प्रतियोगिताहरू — ग्लोबल फोर्स एफसी" data-ar="البطولات — جلوبال فورس">Tournaments — Global Force FC</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Tabs */
+    .tabs-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+    .tab-btn {
+      padding: 0.6rem 1.5rem; border-radius: 8px; border: 1px solid var(--border);
+      background: transparent; color: var(--muted); font-family: var(--font-body);
+      font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: var(--transition);
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .tab-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.2); }
+    .tab-btn.active { background: var(--green); color: var(--navy); border-color: var(--green); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Match detail card */
+    .match-detail-card {
+      background: var(--blue-card); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); overflow: hidden; margin-bottom: 1.5rem;
+    }
+    .match-detail-header {
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      gap: 1rem; align-items: center; padding: 2rem;
+      background: linear-gradient(135deg, rgba(0,201,110,0.06), transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .match-team { text-align: center; }
+    .match-team-name { font-weight: 700; font-size: 1.1rem; color: var(--white); }
+    .match-team-tag { font-size: 0.78rem; color: var(--muted); }
+    .match-score-center { text-align: center; }
+    .match-score-big { font-family: var(--font-display); font-size: 3rem; color: var(--white); line-height: 1; }
+    .match-score-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .match-detail-meta { padding: 1.25rem 2rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+    .meta-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--muted); }
+    .meta-item i { color: var(--green); width: 14px; }
+
+    /* History timeline */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(180deg, var(--green), var(--gold), transparent);
+    }
+    .timeline-item { position: relative; margin-bottom: 2rem; }
+    .timeline-dot {
+      position: absolute; left: -2.45rem; top: 0.25rem;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--green); border: 2px solid var(--navy);
+      box-shadow: 0 0 8px rgba(0,201,110,0.5);
+    }
+    .timeline-dot.gold { background: var(--gold); box-shadow: 0 0 8px rgba(255,184,0,0.5); }
+    .timeline-date { font-size: 0.75rem; color: var(--green); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+    .timeline-date.gold { color: var(--gold); }
+    .timeline-card {
+      background: var(--blue-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.25rem 1.5rem;
+      transition: var(--transition);
+    }
+    .timeline-card:hover { border-color: rgba(0,201,110,0.35); }
+    .timeline-card h4 { color: var(--white); margin-bottom: 0.4rem; }
+    .timeline-card p { font-size: 0.88rem; }
+    .timeline-card .t-badge { margin-top: 0.75rem; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-fallback">GF</div>
+        <div class="nav-logo-text">
+          <span class="club" data-en="GLOBAL FORCE FC" data-ne="ग्लोबल फोर्स एफसी" data-ar="جلوبال فورس">GLOBAL FORCE FC</span>
+          <span class="tagline" data-en="Strength in Unity" data-ne="एकतामा शक्ति" data-ar="القوة في الوحدة">Strength in Unity</span>
+        </div>
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" data-en="Home" data-ne="गृहपृष्ठ" data-ar="الرئيسية">Home</a></li>
+        <li><a href="about.html" data-en="About" data-ne="हाम्रो बारेमा" data-ar="من نحن">About</a></li>
+        <li><a href="team.html" data-en="Team" data-ne="टोली" data-ar="الفريق">Team</a></li>
+        <li><a href="schedule.html" data-en="Schedule" data-ne="तालिका" data-ar="الجدول">Schedule</a></li>
+        <li><a href="tournaments.html" class="active" data-en="Tournaments" data-ne="प्रतियोगिताहरू" data-ar="البطولات">Tournaments</a></li>
+        <li><a href="stats.html" data-en="Stats" data-ne="तथ्यांक" data-ar="إحصائيات">Stats</a></li>
+        <li><a href="membership.html" data-en="Join Us" data-ne="सामेल हुनुहोस्" data-ar="انضم إلينا">Join Us</a></li>
+        <li><a href="gallery.html" data-en="Gallery" data-ne="ग्यालेरी" data-ar="المعرض">Gallery</a></li>
+        <li><a href="contact.html" data-en="Contact" data-ne="सम्पर्क" data-ar="تواصل">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="lang-selector">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ne">NE</button>
+          <button class="lang-btn" data-lang="ar">AR</button>
+        </div>
+        <button class="nav-hamburger" id="navHamburger"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb mb-1">
+      <a href="index.html" data-en="Home" data-ne="गृहपृष्ठ" data-ar="الرئيسية">Home</a>
+      <span>/</span>
+      <span data-en="Tournaments" data-ne="प्रतियोगिताहरू" data-ar="البطولات">Tournaments</span>
+    </div>
+    <h1 data-en="Tournaments & Records" data-ne="प्रतियोगिताहरू र रेकर्डहरू" data-ar="البطولات والسجلات">Tournaments & <span class="green">Records</span></h1>
+    <p data-en="Full history, individual awards, and season achievements" data-ne="पूर्ण इतिहास, व्यक्तिगत पुरस्कारहरू र सिजन उपलब्धिहरू" data-ar="التاريخ الكامل والجوائز الفردية وإنجازات الموسم">Full history, individual awards, and season achievements</p>
+  </div>
+</div>
+
+<!-- ─── INDIVIDUAL AWARDS (SEASON 2025-26) ─────────── -->
+<section class="section" style="background:var(--blue-card);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="section-header">
+      <div class="line"></div>
+      <h2 data-en="Season Awards 2025–26" data-ne="सिजन पुरस्कारहरू २०२५–२६" data-ar="جوائز الموسم 2025-26">Season <span class="gold">Awards</span></h2>
+      <p data-en="Recognizing excellence on and off the pitch" data-ne="मैदानमा र बाहिर उत्कृष्टतालाई मान्यता दिँदै" data-ar="تكريم التميز داخل وخارج الملعب">Recognizing excellence on and off the pitch</p>
+    </div>
+
+    <div class="awards-grid">
+      <div class="award-card gold-award scroll-reveal">
+        <div class="award-icon">🏆</div>
+        <div class="award-title" data-en="Best Player of the Season" data-ne="सिजनको उत्कृष्ट खेलाडी" data-ar="أفضل لاعب في الموسم">Best Player of the Season</div>
+        <div class="award-name" data-en="[Update Name]" data-ne="[नाम अद्यावधिक गर्नुहोस्]" data-ar="[حدّث الاسم]">[Update Name]</div>
+        <div class="award-detail" data-en="To be announced at season end" data-ne="सिजन अन्तमा घोषणा गरिनेछ" data-ar="سيتم الإعلان نهاية الموسم">To be announced</div>
+      </div>
+      <div class="award-card scroll-reveal">
+        <div class="award-icon">⚽</div>
+        <div class="award-title" data-en="Top Goal Scorer" data-ne="शीर्ष गोलकर्ता" data-ar="هداف الموسم">Top Goal Scorer</div>
+        <div class="award-name" data-en="[Update Name]" data-ne="[नाम अद्यावधिक गर्नुहोस्]" data-ar="[حدّث الاسم]">[Update Name]</div>
+        <div class="award-detail" data-en="— goals this season" data-ne="— गोलहरू यो सिजन" data-ar="— أهداف هذا الموسم">— goals this season</div>
+      </div>
+      <div class="award-card scroll-reveal">
+        <div class="award-icon">🎯</div>
+        <div class="award-title" data-en="Most Assists" data-ne="सर्वाधिक असिस्ट" data-ar="أكثر تمريرة حاسمة">Most Assists</div>
+        <div class="award-name" data-en="[Update Name]" data-ne="[नाम]" data-ar="[الاسم]">[Update Name]</div>
+        <div class="award-detail" data-en="— assists this season" data-ne="— असिस्टहरू" data-ar="— تمريرة حاسمة">— assists this season</div>
+      </div>
+      <div class="award-card scroll-reveal">
+        <div class="award-icon">🧤</div>
+        <div class="award-title" data-en="Best Goalkeeper" data-ne="उत्कृष्ट गोलकिपर" data-ar="أفضل حارس مرمى">Best Goalkeeper</div>
+        <div class="award-name" data-en="Nishan" data-ne="निशान" data-ar="نيشان">Nishan</div>
+        <div class="award-detail" data-en="Most clean sheets" data-ne="सर्वाधिक क्लिन सिट" data-ar="أكثر خشبة نظيفة">Most clean sheets</div>
+      </div>
+      <div class="award-card scroll-reveal">
+        <div class="award-icon">🤝</div>
+        <div class="award-title" data-en="Fair Play Award" data-ne="फेयर प्ले पुरस्कार" data-ar="جائزة اللعب النظيف">Fair Play Award</div>
+        <div class="award-name" data-en="[Update Name]" data-ne="[नाम]" data-ar="[الاسم]">[Update Name]</div>
+        <div class="award-detail" data-en="0 yellow cards · Best conduct" data-ne="० पहेंलो कार्ड · उत्कृष्ट आचरण" data-ar="0 بطاقات صفراء · أفضل سلوك">0 yellow cards · Best conduct</div>
+      </div>
+      <div class="award-card scroll-reveal">
+        <div class="award-icon">📅</div>
+        <div class="award-title" data-en="Most Appearances" data-ne="सर्वाधिक उपस्थिति" data-ar="الأكثر مشاركة">Most Appearances</div>
+        <div class="award-name" data-en="[Update Name]" data-ne="[नाम]" data-ar="[الاسم]">[Update Name]</div>
+        <div class="award-detail" data-en="Never missed a match" data-ne="कुनै खेल छुटेन" data-ar="لم يغب عن أي مباراة">Never missed a match</div>
+      </div>
+      <div class="award-card scroll-reveal" style="border-color:rgba(255,184,0,0.25);">
+        <div class="award-icon">⭐</div>
+        <div class="award-title" data-en="Captain's Award" data-ne="कप्तानको पुरस्कार" data-ar="جائزة القائد">Captain's Award</div>
+        <div class="award-name" data-en="D K Gurung" data-ne="डी के गुरुङ" data-ar="دي كي غورونغ">D K Gurung</div>
+        <div class="award-detail" style="color:var(--gold);" data-en="Team Captain & Board" data-ne="टोली कप्तान र बोर्ड" data-ar="قائد الفريق والمجلس">Team Captain &amp; Board</div>
+      </div>
+      <div class="award-card scroll-reveal">
+        <div class="award-icon">🔥</div>
+        <div class="award-title" data-en="Most Improved Player" data-ne="सर्वाधिक सुधारिएको खेलाडी" data-ar="الأكثر تطوراً">Most Improved Player</div>
+        <div class="award-name" data-en="[Update Name]" data-ne="[नाम]" data-ar="[الاسم]">[Update Name]</div>
+        <div class="award-detail" data-en="Greatest development this season" data-ne="यो सिजनको सर्वोच्च विकास" data-ar="الأكثر تطوراً هذا الموسم">Greatest development this season</div>
+      </div>
+    </div>
+    <div class="highlight-box mt-2">
+      <p style="font-size:0.88rem;color:var(--muted);">
+        <i class="fas fa-info-circle" style="color:var(--green);"></i>
+        <span data-en=" Awards are voted on by the full squad at the end of each season. Update player names after each match in team.html and stats.html." data-ne=" पुरस्कारहरू प्रत्येक सिजनको अन्तमा पूर्ण टोलीद्वारा मतदान गरिन्छ।" data-ar=" يتم التصويت على الجوائز من قبل الفريق الكامل في نهاية كل موسم."> Awards are voted on by the full squad at the end of each season. Secretary updates player names after voting.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TOURNAMENT HISTORY ──────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="line"></div>
+      <h2 data-en="Tournament History" data-ne="प्रतियोगिता इतिहास" data-ar="تاريخ البطولات">Tournament <span class="green">History</span></h2>
+    </div>
+
+    <div class="tabs-nav tabs-container" id="tournamentTabs">
+      <button class="tab-btn active" data-tab="all-t" data-en="All" data-ne="सबै" data-ar="الكل">All</button>
+      <button class="tab-btn" data-tab="won-t" data-en="🏆 Won" data-ne="🏆 जितेका" data-ar="🏆 فاز">🏆 Won</button>
+      <button class="tab-btn" data-tab="hosted-t" data-en="⭐ Hosted" data-ne="⭐ आयोजित" data-ar="⭐ استضاف">⭐ Hosted</button>
+    </div>
+
+    <div class="tab-panel active" id="all-t">
+      <div class="tournament-grid">
+
+        <!-- Gen-Z Tournament -->
+        <div class="tournament-card scroll-reveal">
+          <div class="tournament-card-header">
+            <span class="t-status won" data-en="🏆 WON" data-ne="🏆 जित्यो" data-ar="🏆 فاز">🏆 WON</span>
+            <h3 data-en="Gen-Z 1-Day Tournament" data-ne="जेन-जेड १-दिने प्रतियोगिता" data-ar="بطولة جن-زد ليوم واحد">Gen-Z 1-Day Tournament</h3>
+            <div class="t-date"><i class="fas fa-calendar" style="color:var(--green);margin-right:0.4rem;"></i>12 January 2026</div>
+          </div>
+          <div class="tournament-card-body">
+            <div class="t-details">
+              <div class="t-detail-item"><div class="val">🏆</div><div class="key" data-en="Result" data-ne="नतिजा" data-ar="النتيجة">Result</div></div>
+              <div class="t-detail-item"><div class="val" style="color:var(--gold)">300</div><div class="key" data-en="QAR Prize" data-ne="QAR पुरस्कार" data-ar="جائزة ريال">QAR Prize</div></div>
+              <div class="t-detail-item"><div class="val">1-Day</div><div class="key" data-en="Format" data-ne="ढाँचा" data-ar="التنسيق">Format</div></div>
+            </div>
+            <div class="t-result-bar">
+              <i class="fas fa-trophy" style="color:var(--gold);margin-right:0.5rem;"></i>
+              <span data-en="Global Force FC won the tournament — prize money QAR 300 collected" data-ne="ग्लोबल फोर्स एफसीले प्रतियोगिता जित्यो — QAR ३०० पुरस्कार सङ्कलन" data-ar="جلوبال فورس فاز بالبطولة — 300 ريال جائزة">Global Force FC won the tournament — prize money QAR 300 collected</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Khasi Tournament -->
+        <div class="tournament-card scroll-reveal">
+          <div class="tournament-card-header">
+            <span class="t-status hosted" data-en="⭐ ORGANIZED" data-ne="⭐ आयोजित" data-ar="⭐ منظَّم">⭐ ORGANIZED</span>
+            <h3 data-en="Khasi 1-Day Tournament" data-ne="खसी १-दिने प्रतियोगिता" data-ar="بطولة الخاسي ليوم واحد">Khasi 1-Day Tournament</h3>
+            <div class="t-date"><i class="fas fa-calendar" style="color:var(--gold);margin-right:0.4rem;"></i>8 January 2026</div>
+          </div>
+          <div class="tournament-card-body">
+            <div class="t-details">
+              <div class="t-detail-item"><div class="val">HOST</div><div class="key" data-en="Role" data-ne="भूमिका" data-ar="الدور">Role</div></div>
+              <div class="t-detail-item"><div class="val" style="color:var(--gold)">1,225</div><div class="key" data-en="QAR Income" data-ne="QAR आम्दानी" data-ar="دخل ريال">QAR Income</div></div>
+              <div class="t-detail-item"><div class="val">Multi</div><div class="key" data-en="Teams" data-ne="टोलीहरू" data-ar="فرق">Teams</div></div>
+            </div>
+            <div class="t-result-bar gold-border">
+              <i class="fas fa-star" style="color:var(--gold);margin-right:0.5rem;"></i>
+              <span data-en="Organized with Khasi feast prize — QAR 1,225 in team entry fees. Success!" data-ne="खसी दावत पुरस्कार सहित आयोजित — QAR १,२२५ टोली प्रवेश शुल्क। सफलता!" data-ar="منظَّم مع جائزة خروف — 1,225 ريال من رسوم الفرق. نجاح!">Organized with Khasi feast prize — QAR 1,225 in team entry fees. Success!</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- New Year Tournament Day 2 -->
+        <div class="tournament-card scroll-reveal">
+          <div class="tournament-card-header">
+            <span class="t-status hosted" data-en="⭐ ORGANIZED" data-ne="⭐ आयोजित" data-ar="⭐ منظَّم">⭐ ORGANIZED</span>
+            <h3 data-en="New Year Celebration Tournament (Day 2)" data-ne="नयाँ वर्ष उत्सव प्रतियोगिता (दिन २)" data-ar="بطولة الاحتفال بالعام الجديد (اليوم 2)">New Year Celebration — Day 2</h3>
+            <div class="t-date"><i class="fas fa-calendar" style="color:var(--gold);margin-right:0.4rem;"></i>2 January 2026</div>
+          </div>
+          <div class="tournament-card-body">
+            <div class="t-details">
+              <div class="t-detail-item"><div class="val">HOST</div><div class="key" data-en="Role" data-ne="भूमिका" data-ar="الدور">Role</div></div>
+              <div class="t-detail-item"><div class="val" style="color:var(--gold)">450</div><div class="key" data-en="QAR Fees" data-ne="QAR शुल्क" data-ar="رسوم ريال">QAR Fees</div></div>
+            </div>
+            <div class="t-result-bar gold-border">
+              <span data-en="Day 2 of 2-day New Year tournament — QAR 450 collected from team entry fees" data-ne="२-दिने नयाँ वर्ष प्रतियोगिताको दिन २" data-ar="اليوم الثاني من بطولة العام الجديد — 450 ريال رسوم">Day 2 — QAR 450 collected from team entry fees</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- New Year Tournament Day 1 -->
+        <div class="tournament-card scroll-reveal">
+          <div class="tournament-card-header">
+            <span class="t-status hosted" data-en="⭐ ORGANIZED" data-ne="⭐ आयोजित" data-ar="⭐ منظَّم">⭐ ORGANIZED</span>
+            <h3 data-en="New Year Celebration Tournament (Day 1)" data-ne="नयाँ वर्ष उत्सव प्रतियोगिता (दिन १)" data-ar="بطولة الاحتفال بالعام الجديد (اليوم 1)">New Year Celebration — Day 1</h3>
+            <div class="t-date"><i class="fas fa-calendar" style="color:var(--gold);margin-right:0.4rem;"></i>1 January 2026</div>
+          </div>
+          <div class="tournament-card-body">
+            <div class="t-details">
+              <div class="t-detail-item"><div class="val">HOST</div><div class="key" data-en="Role" data-ne="भूमिका" data-ar="الدور">Role</div></div>
+              <div class="t-detail-item"><div class="val" style="color:var(--gold)">450</div><div class="key" data-en="QAR Fees" data-ne="QAR शुल्क" data-ar="رسوم ريال">QAR Fees</div></div>
+            </div>
+            <div class="t-result-bar gold-border">
+              <span data-en="Day 1 — QAR 450 collected. Trophy, transport, food, referee all organized." data-ne="दिन १ — QAR ४५० सङ्कलित। ट्रफी, यातायात, खाना, रेफ्री सबै व्यवस्थित।" data-ar="اليوم 1 — 450 ريال تم جمعها. كأس، مواصلات، طعام، حكم.">Day 1 — QAR 450 collected. Trophy, transport, food, referee all organized.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Global Force 1-Day Tournament (future/organizing) -->
+        <div class="tournament-card scroll-reveal">
+          <div class="tournament-card-header">
+            <span class="t-status upcoming" data-en="📋 PLANNING" data-ne="📋 योजना बनाउँदै" data-ar="📋 تخطيط">📋 PLANNING</span>
+            <h3 data-en="Global Force Cup 2026" data-ne="ग्लोबल फोर्स कप २०२६" data-ar="كأس جلوبال فورس 2026">Global Force Cup 2026</h3>
+            <div class="t-date"><i class="fas fa-calendar" style="color:#818CF8;margin-right:0.4rem;"></i><span data-en="Coming Soon · 2026" data-ne="चाँडै आउँदै · २०२६" data-ar="قريباً · 2026">Coming Soon · 2026</span></div>
+          </div>
+          <div class="tournament-card-body">
+            <div class="t-details">
+              <div class="t-detail-item"><div class="val">8+</div><div class="key" data-en="Teams" data-ne="टोलीहरू" data-ar="فرق">Teams</div></div>
+              <div class="t-detail-item"><div class="val">Multi-N</div><div class="key" data-en="Nations" data-ne="राष्ट्रहरू" data-ar="جنسيات">Nations</div></div>
+            </div>
+            <div class="t-result-bar" style="border-left-color:#818CF8;background:rgba(99,102,241,0.05);">
+              <i class="fas fa-globe" style="color:#818CF8;margin-right:0.5rem;"></i>
+              <span data-en="Open to all nationalities — contact us to register your team. Sponsorship opportunities available." data-ne="सबै राष्ट्रहरूका लागि खुला — तपाईंको टोली दर्ता गर्न सम्पर्क गर्नुहोस्।" data-ar="مفتوح لجميع الجنسيات — تواصل معنا لتسجيل فريقك.">Open to all nationalities — contact us to register your team. Sponsorship opportunities available.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="tab-panel" id="won-t">
+      <div class="tournament-grid">
+        <div class="tournament-card scroll-reveal">
+          <div class="tournament-card-header">
+            <span class="t-status won">🏆 WON</span>
+            <h3 data-en="Gen-Z 1-Day Tournament" data-ne="जेन-जेड १-दिने प्रतियोगिता" data-ar="بطولة جن-زد">Gen-Z 1-Day Tournament</h3>
+            <div class="t-date">12 January 2026</div>
+          </div>
+          <div class="tournament-card-body">
+            <div class="t-result-bar">
+              🏆 <span data-en="Champions! QAR 300 prize money" data-ne="च्याम्पियन! QAR ३०० पुरस्कार" data-ar="بطل! 300 ريال جائزة">Champions! QAR 300 prize money</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="hosted-t">
+      <div class="tournament-grid">
+        <div class="tournament-card scroll-reveal">
+          <div class="tournament-card-header">
+            <span class="t-status hosted">⭐ ORGANIZED</span>
+            <h3>Khasi 1-Day Tournament</h3>
+            <div class="t-date">8 January 2026</div>
+          </div>
+          <div class="tournament-card-body">
+            <div class="t-result-bar gold-border">QAR 1,225 collected in entry fees</div>
+          </div>
+        </div>
+        <div class="tournament-card scroll-reveal">
+          <div class="tournament-card-header">
+            <span class="t-status hosted">⭐ ORGANIZED</span>
+            <h3 data-en="New Year Celebration (2-Day)" data-ne="नयाँ वर्ष उत्सव (२-दिने)" data-ar="احتفال العام الجديد">New Year Celebration (2-Day)</h3>
+            <div class="t-date">1–2 January 2026</div>
+          </div>
+          <div class="tournament-card-body">
+            <div class="t-result-bar gold-border">QAR 900 total across both days</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── FINANCIAL HISTORY SUMMARY ─────────────────── -->
+<section class="section" style="background:var(--blue-card);border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-header">
+      <div class="line"></div>
+      <h2 data-en="Club History Timeline" data-ne="क्लब इतिहास टाइमलाइन" data-ar="الجدول الزمني لتاريخ النادي">Club <span class="green">History</span></h2>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item scroll-reveal">
+        <div class="timeline-dot gold"></div>
+        <div class="timeline-date gold">🏆 Jan 12, 2026</div>
+        <div class="timeline-card">
+          <h4 data-en="Gen-Z Tournament Win 🏆" data-ne="जेन-जेड टुर्नामेन्ट जित 🏆" data-ar="فوز ببطولة جن-زد 🏆">Gen-Z Tournament Win 🏆</h4>
+          <p data-en="Global Force FC won their first external tournament. QAR 300 prize money. Club's biggest win to date." data-ne="ग्लोबल फोर्स एफसीले पहिलो बाह्य प्रतियोगिता जित्यो। QAR ३०० पुरस्कार।" data-ar="جلوبال فورس فاز بأول بطولة خارجية. 300 ريال جائزة.">Global Force FC won their first external tournament. QAR 300 prize money. Club's biggest win to date.</p>
+          <div class="flex flex-wrap gap-1 mt-1"><span class="tag tag-gold">🏆 Trophy</span><span class="tag tag-green">First Win</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-item scroll-reveal">
+        <div class="timeline-dot gold"></div>
+        <div class="timeline-date gold">⭐ Jan 8, 2026</div>
+        <div class="timeline-card">
+          <h4 data-en="Khasi 1-Day Tournament Organized" data-ne="खसी १-दिने प्रतियोगिता आयोजित" data-ar="تنظيم بطولة الخاسي">Khasi 1-Day Tournament Organized</h4>
+          <p data-en="Club organized a major tournament with Khasi feast as prize. QAR 1,225 collected. Professional organization with linesman, referee." data-ne="क्लबले खसी दावत पुरस्कार सहित ठूलो प्रतियोगिता आयोजित गर्‍यो।" data-ar="نظَّم النادي بطولة كبرى. جمع 1,225 ريال.">Club organized a major tournament with Khasi feast as prize. QAR 1,225 collected. Professional organization.</p>
+          <div class="flex flex-wrap gap-1 mt-1"><span class="tag tag-gold">⭐ Hosted</span><span class="tag tag-green">QAR 1,225</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-item scroll-reveal">
+        <div class="timeline-dot gold"></div>
+        <div class="timeline-date gold">🎉 Jan 1–2, 2026</div>
+        <div class="timeline-card">
+          <h4 data-en="New Year Celebration Tournament" data-ne="नयाँ वर्ष उत्सव प्रतियोगिता" data-ar="بطولة احتفال رأس السنة">New Year Celebration Tournament</h4>
+          <p data-en="2-day event organized by the club to celebrate New Year 2026. Trophy, food, transport. QAR 900 total." data-ne="क्लबले नयाँ वर्ष २०२६ मनाउन २-दिने कार्यक्रम आयोजित गर्‍यो।" data-ar="فعالية 2 أيام احتفالاً بالعام الجديد 2026. 900 ريال إجمالي.">2-day event to celebrate New Year 2026. Trophy, food, transport all organized. QAR 900 total.</p>
+          <div class="flex flex-wrap gap-1 mt-1"><span class="tag tag-gold">2-Day Event</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-item scroll-reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Dec 25, 2025</div>
+        <div class="timeline-card">
+          <h4 data-en="Club Christmas Celebration Party 🎄" data-ne="क्लब क्रिसमस उत्सव पार्टी 🎄" data-ar="حفل عيد الميلاد 🎄">Club Christmas Celebration Party 🎄</h4>
+          <p data-en="First major club social event — Biryani, Chowmein, MoMo feast for all members." data-ne="पहिलो प्रमुख क्लब सामाजिक कार्यक्रम — बिरियानी, चाउमिन, मोमो दावत।" data-ar="أول فعالية اجتماعية كبرى للنادي — وليمة للأعضاء جميعاً.">First major club social event — Biryani, Chowmein, MoMo feast for all members.</p>
+          <div class="flex flex-wrap gap-1 mt-1"><span class="tag tag-blue">Social Event</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-item scroll-reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Dec 26, 2025</div>
+        <div class="timeline-card">
+          <h4 data-en="Professional Equipment Purchased" data-ne="पेशेवर उपकरण खरिद" data-ar="شراء معدات احترافية">Professional Equipment Purchased</h4>
+          <p data-en="3 match balls, storage bag, 2 mini goal posts, 15 cones, transport. Total: QAR 685." data-ne="३ खेल बल, भण्डारण झोला, २ मिनी गोल पोस्ट, १५ कोन, यातायात। कुल: QAR ६८५।" data-ar="3 كرات، حقيبة، هدفان صغيران، 15 مخروطاً. المجموع: 685 ريال.">3 match balls, storage bag, 2 mini goal posts, 15 cones, transport. Total: QAR 685.</p>
+          <div class="flex flex-wrap gap-1 mt-1"><span class="tag tag-muted">Equipment</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-item scroll-reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Nov–Dec 2025</div>
+        <div class="timeline-card">
+          <h4 data-en="Club Formation & First Matches" data-ne="क्लब गठन र पहिलो खेलहरू" data-ar="تأسيس النادي والمباريات الأولى">Club Formation &amp; First Matches</h4>
+          <p data-en="Global Force FC officially founded. First friendly matches played — vs Sunsari FC, Himalayan FC, Unipart FC. Opening balance: QAR 1,500." data-ne="ग्लोबल फोर्स एफसी औपचारिक रूपमा स्थापना भयो। पहिलो मैत्रीपूर्ण खेलहरू।" data-ar="تأسيس جلوبال فورس رسمياً. مباريات ودية أولى. الرصيد الافتتاحي: 1,500 ريال.">Global Force FC officially founded. First friendly matches played. Opening balance: QAR 1,500.</p>
+          <div class="flex flex-wrap gap-1 mt-1"><span class="tag tag-green">Founded</span><span class="tag tag-blue">First Matches</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-box"><div class="fallback">GF</div><div><h3>Global Force FC</h3><div class="tagline" data-en="Strength in Unity" data-ne="एकतामा शक्ति" data-ar="القوة في الوحدة">Strength in Unity</div></div></div>
+        <p data-en="Barwa Al Baraha, Qatar · Est. 2025" data-ne="बर्वा अल बराहा, कतार · स्थापना २०२५" data-ar="برواء البراهة، قطر · تأسست 2025">Barwa Al Baraha, Qatar · Est. 2025</p>
+        <div class="social-links">
+          <a href="https://facebook.com/YOUR_PAGE" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://tiktok.com/YOUR_ACCOUNT" target="_blank" class="social-link"><i class="fab fa-tiktok"></i></a>
+          <a href="https://wa.me/974XXXXXXXX" target="_blank" class="social-link"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 data-en="Quick Links" data-ne="द्रुत लिङ्क" data-ar="روابط">Quick Links</h4>
+        <div class="footer-links">
+          <a href="index.html">Home</a><a href="team.html">Our Team</a>
+          <a href="schedule.html">Schedule</a><a href="stats.html">Stats</a>
+          <a href="membership.html">Join Us</a><a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h4 data-en="Contact" data-ne="सम्पर्क" data-ar="تواصل">Contact</h4>
+        <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>Barwa Al Baraha, Qatar</span></div>
+        <div class="footer-contact-item"><i class="fas fa-clock"></i><span data-en="Fri 6:30–7:30 PM" data-ne="शुक्र ६:३०–७:३०" data-ar="الجمعة 6:30–7:30">Fri 6:30–7:30 PM</span></div>
+        <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>secretary@globalforcefc.com</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Global Force FC · All rights reserved</span>
+      <div class="footer-flags">🇳🇵 🇶🇦</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Tab switching for tournaments
+    const tabs = document.querySelectorAll('#tournamentTabs .tab-btn');
+    const panels = { 'all-t': document.getElementById('all-t'), 'won-t': document.getElementById('won-t'), 'hosted-t': document.getElementById('hosted-t') };
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        Object.values(panels).forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        panels[tab.dataset.tab]?.classList.add('active');
+      });
+    });
+  });
+</script>
+</body>
+</html>

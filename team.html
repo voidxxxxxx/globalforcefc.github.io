@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team — Global Force FC</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Position filter tabs */
+    .pos-filter { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .pos-btn {
+      padding: 0.45rem 1.1rem; border-radius: 50px; border: 1px solid var(--border);
+      background: transparent; color: var(--muted); font-family: var(--font-body);
+      font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: var(--transition);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .pos-btn.active, .pos-btn:hover { background: var(--green); color: var(--navy); border-color: var(--green); }
+    .player-card.hidden { display: none; }
+
+    /* Photo upload button overlay */
+    .photo-upload-trigger {
+      position: absolute; bottom: 0.5rem; right: 0.5rem;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(0,201,110,0.9); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--navy); font-size: 0.8rem; transition: var(--transition);
+      z-index: 5;
+    }
+    .photo-upload-trigger:hover { background: var(--green-glow); transform: scale(1.1); }
+    .photo-tip { font-size: 0.72rem; color: var(--muted2); text-align: center; margin-top: 0.3rem; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-fallback">GF</div>
+        <div class="nav-logo-text">
+          <span class="club" data-en="GLOBAL FORCE FC" data-ne="ग्लोबल फोर्स एफसी" data-ar="جلوبال فورس">GLOBAL FORCE FC</span>
+          <span class="tagline" data-en="Strength in Unity" data-ne="एकतामा शक्ति" data-ar="القوة في الوحدة">Strength in Unity</span>
+        </div>
+      </a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" data-en="Home" data-ne="गृहपृष्ठ" data-ar="الرئيسية">Home</a></li>
+        <li><a href="about.html" data-en="About" data-ne="हाम्रो बारेमा" data-ar="من نحن">About</a></li>
+        <li><a href="team.html" class="active" data-en="Team" data-ne="टोली" data-ar="الفريق">Team</a></li>
+        <li><a href="schedule.html" data-en="Schedule" data-ne="तालिका" data-ar="الجدول">Schedule</a></li>
+        <li><a href="tournaments.html" data-en="Tournaments" data-ne="प्रतियोगिताहरू" data-ar="البطولات">Tournaments</a></li>
+        <li><a href="stats.html" data-en="Stats" data-ne="तथ्यांक" data-ar="إحصائيات">Stats</a></li>
+        <li><a href="membership.html" data-en="Join Us" data-ne="सामेल हुनुहोस्" data-ar="انضم إلينا">Join Us</a></li>
+        <li><a href="gallery.html" data-en="Gallery" data-ne="ग्यालेरी" data-ar="المعرض">Gallery</a></li>
+        <li><a href="contact.html" data-en="Contact" data-ne="सम्पर्क" data-ar="تواصل">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="lang-selector">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ne">NE</button>
+          <button class="lang-btn" data-lang="ar">AR</button>
+        </div>
+        <button class="nav-hamburger" id="navHamburger"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb mb-1"><a href="index.html">Home</a><span>/</span><span data-en="Team" data-ne="टोली" data-ar="الفريق">Team</span></div>
+    <h1 data-en="Our Squad" data-ne="हाम्रो टोली" data-ar="فريقنا">Our <span class="green">Squad</span></h1>
+    <p data-en="Season 2025–26 · 26 Players · Barwa Al Baraha, Qatar" data-ne="सिजन २०२५–२६ · २६ खेलाडीहरू · बर्वा अल बराहा, कतार" data-ar="موسم 2025-26 · 26 لاعباً · برواء البراهة، قطر">Season 2025–26 · 26 Players · Barwa Al Baraha, Qatar</p>
+  </div>
+</div>
+
+<!-- BOARD / MANAGEMENT -->
+<section class="section" style="background:var(--blue-card);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="section-header">
+      <div class="line"></div>
+      <h2 data-en="Club Management" data-ne="क्लब व्यवस्थापन" data-ar="إدارة النادي">Club <span class="green">Management</span></h2>
+    </div>
+    <div class="board-grid">
+      <div class="board-card president scroll-reveal">
+        <div class="board-avatar">👑</div>
+        <div class="role" data-en="President" data-ne="अध्यक्ष" data-ar="الرئيس">President</div>
+        <h4>Hemanta Tamang</h4>
+        <p style="font-size:0.8rem;margin-top:0.4rem;" data-en="Club Leader · 2025–Present" data-ne="क्लब प्रमुख · २०२५–हाल" data-ar="رئيس النادي · 2025–الآن">Club Leader · 2025–Present</p>
+      </div>
+      <div class="board-card vp scroll-reveal">
+        <div class="board-avatar">🤝</div>
+        <div class="role" data-en="Vice President" data-ne="उपाध्यक्ष" data-ar="نائب الرئيس">Vice President</div>
+        <h4>Naresh Gurung</h4>
+        <p style="font-size:0.8rem;margin-top:0.4rem;" data-en="Operations" data-ne="सञ्चालन" data-ar="العمليات">Operations</p>
+      </div>
+      <div class="board-card scroll-reveal" style="border-color:rgba(0,201,110,0.3);">
+        <div class="board-avatar" style="background:rgba(0,201,110,0.1);border-color:rgba(0,201,110,0.3);">⭐</div>
+        <div class="role" data-en="Captain / Board" data-ne="कप्तान / बोर्ड" data-ar="القائد / المجلس">Captain / Board</div>
+        <h4>D K Gurung</h4>
+        <p style="font-size:0.8rem;margin-top:0.4rem;" data-en="Midfielder · Captain" data-ne="मिडफिल्डर · कप्तान" data-ar="وسط · قائد">Midfielder · Captain</p>
+      </div>
+      <div class="board-card scroll-reveal">
+        <div class="board-avatar">📋</div>
+        <div class="role" data-en="Secretary" data-ne="सचिव" data-ar="السكرتير">Secretary</div>
+        <h4 data-en="[Your Name]" data-ne="[तपाईंको नाम]" data-ar="[اسمك]">[Your Name]</h4>
+        <p style="font-size:0.8rem;margin-top:0.4rem;" data-en="Admin & Website" data-ne="प्रशासन र वेबसाइट" data-ar="الإدارة والموقع">Admin &amp; Website</p>
+      </div>
+      <div class="board-card scroll-reveal">
+        <div class="board-avatar">💰</div>
+        <div class="role" data-en="Treasurer" data-ne="कोषाध्यक्ष" data-ar="أمين الصندوق">Treasurer</div>
+        <h4 data-en="[Treasurer Name]" data-ne="[कोषाध्यक्षको नाम]" data-ar="[اسم أمين الصندوق]">[Treasurer Name]</h4>
+        <p style="font-size:0.8rem;margin-top:0.4rem;" data-en="Finance & Fees" data-ne="वित्त र शुल्क" data-ar="المالية">Finance &amp; Fees</p>
+      </div>
+      <div class="board-card scroll-reveal">
+        <div class="board-avatar">🛡️</div>
+        <div class="role" data-en="Board Member" data-ne="बोर्ड सदस्य" data-ar="عضو المجلس">Board Member</div>
+        <h4>Bijay Tamang</h4>
+        <p style="font-size:0.8rem;margin-top:0.4rem;" data-en="Defender" data-ne="डिफेन्डर" data-ar="مدافع">Defender</p>
+      </div>
+      <div class="board-card scroll-reveal">
+        <div class="board-avatar">⚡</div>
+        <div class="role" data-en="Board Member" data-ne="बोर्ड सदस्य" data-ar="عضو المجلس">Board Member</div>
+        <h4>Manojz Gurung</h4>
+        <p style="font-size:0.8rem;margin-top:0.4rem;" data-en="Forward" data-ne="फर्वार्ड" data-ar="مهاجم">Forward</p>
+      </div>
+      <div class="board-card scroll-reveal">
+        <div class="board-avatar">🎯</div>
+        <div class="role" data-en="Board Member" data-ne="बोर्ड सदस्य" data-ar="عضو المجلس">Board Member</div>
+        <h4>Rosan Shrestha</h4>
+        <p style="font-size:0.8rem;margin-top:0.4rem;" data-en="Midfielder" data-ne="मिडफिल्डर" data-ar="وسط">Midfielder</p>
+      </div>
+    </div>
+
+    <h3 class="mt-3 mb-1" style="color:var(--muted);font-size:0.9rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;" data-en="Advisory Members" data-ne="सल्लाहकार सदस्यहरू" data-ar="الأعضاء الاستشاريون">Advisory Members</h3>
+    <div class="board-grid">
+      <div class="board-card scroll-reveal"><div class="board-avatar" style="font-size:1.2rem;">💡</div><div class="role" data-en="Advisory" data-ne="सल्लाहकार" data-ar="استشاري">Advisory</div><h4>Subash Gurung</h4></div>
+      <div class="board-card scroll-reveal"><div class="board-avatar" style="font-size:1.2rem;">💡</div><div class="role" data-en="Advisory" data-ne="सल्लाहकार" data-ar="استشاري">Advisory</div><h4>Sujan Rai</h4></div>
+      <div class="board-card scroll-reveal"><div class="board-avatar" style="font-size:1.2rem;">💡</div><div class="role" data-en="Advisory" data-ne="सल्लाहकार" data-ar="استشاري">Advisory</div><h4>Bimal Devika</h4></div>
+      <div class="board-card scroll-reveal"><div class="board-avatar" style="font-size:1.2rem;">💡</div><div class="role" data-en="Advisory" data-ne="सल्लाहकार" data-ar="استشاري">Advisory</div><h4>Ramji Basnet</h4></div>
+      <div class="board-card scroll-reveal"><div class="board-avatar" style="font-size:1.2rem;">💡</div><div class="role" data-en="Advisory" data-ne="सल्लाहकار" data-ar="استشاري">Advisory</div><h4>Sijam Thapa Chettri</h4></div>
+      <div class="board-card scroll-reveal"><div class="board-avatar" style="font-size:1.2rem;">💡</div><div class="role" data-en="Advisory" data-ne="सल्लाहकार" data-ar="استشاري">Advisory</div><h4>Sandesh Karki</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- SQUAD -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="line"></div>
+      <h2 data-en="Full Squad" data-ne="पूर्ण टोली" data-ar="الفريق الكامل">Full <span class="green">Squad</span></h2>
+      <p data-en="Click the green + button on any card to upload a player photo" data-ne="फोटो अपलोड गर्न कुनै पनि कार्डमा हरियो + बटन थिच्नुहोस्" data-ar="انقر على الزر الأخضر + لتحميل صورة اللاعب">Click the green <span style="color:var(--green)">+</span> button on any card to upload a player photo</p>
+    </div>
+
+    <div class="pos-filter">
+      <button class="pos-btn active" data-pos="all" data-en="All Players" data-ne="सबै खेलाडी" data-ar="الكل">All Players</button>
+      <button class="pos-btn" data-pos="gk" data-en="GK" data-ne="GK" data-ar="حارس">GK</button>
+      <button class="pos-btn" data-pos="def" data-en="Defenders" data-ne="डिफेन्डरहरू" data-ar="مدافعون">Defenders</button>
+      <button class="pos-btn" data-pos="mid" data-en="Midfielders" data-ne="मिडफिल्डरहरू" data-ar="وسط">Midfielders</button>
+      <button class="pos-btn" data-pos="fwd" data-en="Forwards" data-ne="फर्वार्डहरू" data-ar="مهاجمون">Forwards</button>
+    </div>
+
+    <div class="squad-grid" id="squadGrid">
+
+      <!-- GK -->
+      <div class="player-card scroll-reveal" data-pos="gk">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">1</span>
+          <span class="pos-tag pos-gk">GK</span>
+          <button class="photo-upload-trigger" title="Upload photo"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info">
+          <h4>Nishan</h4>
+          <div class="role" data-en="Goalkeeper" data-ne="गोलकिपर" data-ar="حارس مرمى">Goalkeeper</div>
+          <div class="player-stats-mini">
+            <div class="stat-mini"><div class="val">-</div><div class="key" data-en="CS" data-ne="CS" data-ar="CS">CS</div></div>
+            <div class="stat-mini"><div class="val">-</div><div class="key" data-en="Apps" data-ne="Apps" data-ar="Apps">Apps</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="gk">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">2</span>
+          <span class="pos-tag pos-gk">GK</span>
+          <button class="photo-upload-trigger" title="Upload photo"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info">
+          <h4>Pawan Senchuri</h4>
+          <div class="role" data-en="Goalkeeper" data-ne="गोलकिपर" data-ar="حارس مرمى">Goalkeeper</div>
+          <div class="player-stats-mini">
+            <div class="stat-mini"><div class="val">-</div><div class="key">CS</div></div>
+            <div class="stat-mini"><div class="val">-</div><div class="key">Apps</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DEFENDERS -->
+      <div class="player-card scroll-reveal" data-pos="def">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">3</span>
+          <span class="pos-tag pos-def">DEF</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Sanish Gurung</h4><div class="role" data-en="Defender" data-ne="डिफेन्डर" data-ar="مدافع">Defender</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="def">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">4</span>
+          <span class="pos-tag pos-def">DEF</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Sujan Rai</h4><div class="role" data-en="Defender" data-ne="डिफेन्डर" data-ar="مدافع">Defender</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="def">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">5</span>
+          <span class="pos-tag pos-def">DEF</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Ashis Aachama</h4><div class="role" data-en="Defender" data-ne="डिफेन्डर" data-ar="مدافع">Defender</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="def">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">6</span>
+          <span class="pos-tag pos-def">DEF</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Bijay Tamang</h4><div class="role" data-en="Defender · Board" data-ne="डिफेन्डर · बोर्ड" data-ar="مدافع · مجلس">Defender · Board</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="def">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">7</span>
+          <span class="pos-tag pos-def">DEF</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Ramji Basnet</h4><div class="role" data-en="Defender" data-ne="डिफेन्डर" data-ar="مدافع">Defender</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="def">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">8</span>
+          <span class="pos-tag pos-def">DEF</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Sijam Thapa Chettri</h4><div class="role" data-en="Defender" data-ne="डिफेन्डर" data-ar="مدافع">Defender</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="def">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">9</span>
+          <span class="pos-tag pos-def">DEF</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Anish Karki</h4><div class="role" data-en="Defender" data-ne="डिफेन्डर" data-ar="مدافع">Defender</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="def">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">10</span>
+          <span class="pos-tag pos-def">DEF</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Dinesh Chaudhary</h4><div class="role" data-en="Defender" data-ne="डिफेन्डर" data-ar="مدافع">Defender</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <!-- MIDFIELDERS -->
+      <div class="player-card scroll-reveal" data-pos="mid">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="captain-badge">CAP</span>
+          <span class="player-number">11</span>
+          <span class="pos-tag pos-mid">MID</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>D K Gurung ⭐</h4><div class="role" data-en="Midfielder · Captain" data-ne="मिडफिल्डर · कप्तान" data-ar="وسط · قائد">Midfielder · Captain</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="mid">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">12</span>
+          <span class="pos-tag pos-mid">MID</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Saugat</h4><div class="role" data-en="Midfielder" data-ne="मिडफिल्डर" data-ar="وسط">Midfielder</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="mid">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">13</span>
+          <span class="pos-tag pos-mid">MID</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Subash Gurung Gaule</h4><div class="role" data-en="Midfielder" data-ne="मिडफिल्डर" data-ar="وسط">Midfielder</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="mid">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">14</span>
+          <span class="pos-tag pos-mid">MID</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Bibke Thapa Magar</h4><div class="role" data-en="Midfielder" data-ne="मिडफिल्डर" data-ar="وسط">Midfielder</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="mid">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">15</span>
+          <span class="pos-tag pos-mid">MID</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Rosan Shrestha</h4><div class="role" data-en="Midfielder · Board" data-ne="मिडफिल्डर · बोर्ड" data-ar="وسط · مجلس">Midfielder · Board</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="mid">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">16</span>
+          <span class="pos-tag pos-mid">MID</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Meche</h4><div class="role" data-en="Midfielder" data-ne="मिडफिल्डर" data-ar="وسط">Midfielder</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="mid">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">17</span>
+          <span class="pos-tag pos-mid">MID</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Jivan</h4><div class="role" data-en="Midfielder" data-ne="मिडफिल्डर" data-ar="وسط">Midfielder</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <!-- FORWARDS -->
+      <div class="player-card scroll-reveal" data-pos="fwd">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">18</span>
+          <span class="pos-tag pos-fwd">FWD</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Subash Gurung</h4><div class="role" data-en="Forward" data-ne="फर्वार्ड" data-ar="مهاجم">Forward</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="fwd">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">19</span>
+          <span class="pos-tag pos-fwd">FWD</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Bimal Devika</h4><div class="role" data-en="Forward" data-ne="फर्वार्ड" data-ar="مهاجم">Forward</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="fwd">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">20</span>
+          <span class="pos-tag pos-fwd">FWD</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Manojz Gurung</h4><div class="role" data-en="Forward · Board" data-ne="फर्वार्ड · बोर्ड" data-ar="مهاجم · مجلس">Forward · Board</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="fwd">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">21</span>
+          <span class="pos-tag pos-fwd">FWD</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Madan Murmu</h4><div class="role" data-en="Forward" data-ne="फर्वार्ड" data-ar="مهاجم">Forward</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="fwd">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">22</span>
+          <span class="pos-tag pos-fwd">FWD</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Sandesh Karki</h4><div class="role" data-en="Forward" data-ne="फर्वार्ड" data-ar="مهاجم">Forward</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="fwd">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">23</span>
+          <span class="pos-tag pos-fwd">FWD</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Raju Tamang</h4><div class="role" data-en="Forward" data-ne="फर्वार्ड" data-ar="مهاجم">Forward</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="fwd">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">24</span>
+          <span class="pos-tag pos-fwd">FWD</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Jirre</h4><div class="role" data-en="Forward" data-ne="फर्वार्ड" data-ar="مهاجم">Forward</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="fwd">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">25</span>
+          <span class="pos-tag pos-fwd">FWD</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Dil Bahadur</h4><div class="role" data-en="Forward" data-ne="फर्वार्ड" data-ar="مهاجم">Forward</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+      <div class="player-card scroll-reveal" data-pos="fwd">
+        <div class="player-photo">
+          <div class="player-photo-placeholder"><i class="fas fa-user"></i></div>
+          <span class="player-number">26</span>
+          <span class="pos-tag pos-fwd">FWD</span>
+          <button class="photo-upload-trigger"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="player-info"><h4>Resham</h4><div class="role" data-en="Forward" data-ne="फर्वार्ड" data-ar="مهاجم">Forward</div><div class="player-stats-mini"><div class="stat-mini"><div class="val">-</div><div class="key">G</div></div><div class="stat-mini"><div class="val">-</div><div class="key">A</div></div></div></div>
+      </div>
+
+    </div><!-- /squad-grid -->
+
+    <div class="highlight-box mt-3 text-center">
+      <i class="fas fa-camera" style="color:var(--green);margin-right:0.5rem;"></i>
+      <span style="color:var(--white);font-size:0.95rem;" data-en="To add player photos: click the green + button on each card. Photos are stored in your browser until you deploy. For permanent photos, add images to assets/players/ folder and update the HTML src attributes." data-ne="खेलाडी फोटो थप्न: प्रत्येक कार्डमा हरियो + बटन थिच्नुहोस्।" data-ar="لإضافة صور اللاعبين: انقر على الزر الأخضر + في كل بطاقة.">To add player photos: click the green <span style="color:var(--green)">+</span> button on each card, or place images in <code style="background:rgba(255,255,255,0.08);padding:0.1rem 0.4rem;border-radius:4px;">assets/players/firstname-lastname.jpg</code></span>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-box"><div class="fallback">GF</div><div><h3>Global Force FC</h3><div class="tagline">Strength in Unity</div></div></div>
+        <p>Barwa Al Baraha, Qatar · Est. 2025</p>
+        <div class="social-links">
+          <a href="https://facebook.com/YOUR_PAGE" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://tiktok.com/YOUR_ACCOUNT" class="social-link"><i class="fab fa-tiktok"></i></a>
+          <a href="https://wa.me/974XXXXXXXX" class="social-link"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <div class="footer-links">
+          <a href="index.html">Home</a><a href="tournaments.html">Tournaments</a>
+          <a href="stats.html">Stats</a><a href="membership.html">Join Us</a>
+        </div>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Training: Fri 6:30–7:30 PM</span></div>
+        <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>secretary@globalforcefc.com</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 Global Force FC</span><div class="footer-flags">🇳🇵 🇶🇦</div></div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const posButtons = document.querySelectorAll('.pos-btn');
+    const cards = document.querySelectorAll('.player-card[data-pos]');
+    posButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        posButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const pos = btn.dataset.pos;
+        cards.forEach(card => {
+          if (pos === 'all' || card.dataset.pos === pos) card.classList.remove('hidden');
+          else card.classList.add('hidden');
+        });
+      });
+    });
+  });
+</script>
+</body>
+</html>
