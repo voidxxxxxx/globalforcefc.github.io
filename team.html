@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-en="Teams - Global Force FC" data-ne="टोलीहरू - ग्लोबल फोर्स एफसी">Teams - Global Force FC</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
-    <base href="/globalforcefc.github.io/">
+    <base href="/">
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <img src="assets/logo.png" alt="Global Force FC">
+                <img src="./assets/logo.png" alt="Global Force FC">
                 <span data-en="GLOBAL FORCE FC" data-ne="ग्लोबल फोर्स एफसी">GLOBAL FORCE FC</span>
             </div>
             <div class="language-switcher">
@@ -26,14 +26,14 @@
                 <i class="fas fa-bars"></i>
             </div>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" data-en="Home" data-ne="गृहपृष्ठ">Home</a></li>
-                <li><a href="about.html" data-en="About" data-ne="हाम्रो बारेमा">About</a></li>
-                <li><a href="team.html" class="active" data-en="Teams" data-ne="टोलीहरू">Teams</a></li>
-                <li><a href="schedule.html" data-en="Schedule" data-ne="तालिका">Schedule</a></li>
-                <li><a href="stats.html" data-en="Statistics" data-ne="तथ्यांक">Statistics</a></li>
-                <li><a href="membership.html" data-en="Membership" data-ne="सदस्यता">Membership</a></li>
-                <li><a href="gallery.html" data-en="Gallery" data-ne="ग्यालेरी">Gallery</a></li>
-                <li><a href="contact.html" data-en="Contact" data-ne="सम्पर्क">Contact</a></li>
+                <li><a href="./index.html" data-en="Home" data-ne="गृहपृष्ठ">Home</a></li>
+                <li><a href="./about.html" data-en="About" data-ne="हाम्रो बारेमा">About</a></li>
+                <li><a href="./team.html" class="active" data-en="Teams" data-ne="टोलीहरू">Teams</a></li>
+                <li><a href="./schedule.html" data-en="Schedule" data-ne="तालिका">Schedule</a></li>
+                <li><a href="./stats.html" data-en="Statistics" data-ne="तथ्यांक">Statistics</a></li>
+                <li><a href="./membership.html" data-en="Membership" data-ne="सदस्यता">Membership</a></li>
+                <li><a href="./gallery.html" data-en="Gallery" data-ne="ग्यालेरी">Gallery</a></li>
+                <li><a href="./contact.html" data-en="Contact" data-ne="सम्पर्क">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -210,10 +210,10 @@
                 <div class="footer-section">
                     <h3 data-en="Quick Links" data-ne="द्रुत लिङ्कहरू">Quick Links</h3>
                     <ul>
-                        <li><a href="schedule.html" data-en="Fixtures" data-ne="खेल तालिका">Fixtures</a></li>
-                        <li><a href="stats.html" data-en="Player Stats" data-ne="खेलाडी तथ्यांक">Player Stats</a></li>
-                        <li><a href="membership.html" data-en="Join Us" data-ne="हामीसँग सामेल हुनुहोस्">Join Us</a></li>
-                        <li><a href="contact.html" data-en="Contact" data-ne="सम्पर्क">Contact</a></li>
+                        <li><a href="./schedule.html" data-en="Fixtures" data-ne="खेल तालिका">Fixtures</a></li>
+                        <li><a href="./stats.html" data-en="Player Stats" data-ne="खेलाडी तथ्यांक">Player Stats</a></li>
+                        <li><a href="./membership.html" data-en="Join Us" data-ne="हामीसँग सामेल हुनुहोस्">Join Us</a></li>
+                        <li><a href="./contact.html" data-en="Contact" data-ne="सम्पर्क">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -229,20 +229,38 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (navToggle) {
+                navToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    const icon = navToggle.querySelector('i');
+                    if (navMenu.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            }
+
             const langToggle = document.getElementById('langToggle');
             const elements = document.querySelectorAll('[data-en][data-ne]');
             const savedLang = localStorage.getItem('gffc-language') || 'en';
             setLanguage(savedLang);
             
-            langToggle.addEventListener('click', function() {
-                const currentLang = localStorage.getItem('gffc-language') || 'en';
-                const newLang = currentLang === 'en' ? 'ne' : 'en';
-                setLanguage(newLang);
-                localStorage.setItem('gffc-language', newLang);
-            });
+            if (langToggle) {
+                langToggle.addEventListener('click', function() {
+                    const currentLang = localStorage.getItem('gffc-language') || 'en';
+                    const newLang = currentLang === 'en' ? 'ne' : 'en';
+                    setLanguage(newLang);
+                    localStorage.setItem('gffc-language', newLang);
+                });
+            }
             
             function setLanguage(lang) {
                 elements.forEach(element => {
