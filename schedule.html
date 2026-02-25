@@ -3,173 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule - Global Force FC</title>
+    <title data-en="Schedule - Global Force FC" data-ne="तालिका - ग्लोबल फोर्स एफसी">Schedule - Global Force FC</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    <base href="/globalforcefc.github.io/">
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <div class="logo">
                 <img src="assets/logo.png" alt="Global Force FC">
-                <span>GLOBAL FORCE FC</span>
+                <span data-en="GLOBAL FORCE FC" data-ne="ग्लोबल फोर्स एफसी">GLOBAL FORCE FC</span>
+            </div>
+            <div class="language-switcher">
+                <button id="langToggle" class="lang-btn">
+                    <span class="flag">🇳🇵</span>
+                    <span class="lang-text" data-en="नेपाली" data-ne="English">नेपाली</span>
+                </button>
             </div>
             <div class="nav-toggle" id="navToggle">
                 <i class="fas fa-bars"></i>
             </div>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="team.html">Teams</a></li>
-                <li><a href="schedule.html" class="active">Schedule</a></li>
-                <li><a href="stats.html">Statistics</a></li>
-                <li><a href="membership.html">Membership</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.html" data-en="Home" data-ne="गृहपृष्ठ">Home</a></li>
+                <li><a href="about.html" data-en="About" data-ne="हाम्रो बारेमा">About</a></li>
+                <li><a href="team.html" data-en="Teams" data-ne="टोलीहरू">Teams</a></li>
+                <li><a href="schedule.html" class="active" data-en="Schedule" data-ne="तालिका">Schedule</a></li>
+                <li><a href="stats.html" data-en="Statistics" data-ne="तथ्यांक">Statistics</a></li>
+                <li><a href="membership.html" data-en="Membership" data-ne="सदस्यता">Membership</a></li>
+                <li><a href="gallery.html" data-en="Gallery" data-ne="ग्यालेरी">Gallery</a></li>
+                <li><a href="contact.html" data-en="Contact" data-ne="सम्पर्क">Contact</a></li>
             </ul>
         </div>
     </nav>
 
     <section class="page-header">
         <div class="container">
-            <h1>Schedule</h1>
-            <p>Fixtures, Results & Training</p>
+            <h1 data-en="Schedule" data-ne="तालिका">Schedule</h1>
+            <p data-en="Fixtures, Results & Training" data-ne="खेलहरू, नतिजाहरू र प्रशिक्षण">Fixtures, Results & Training</p>
         </div>
     </section>
 
     <section class="schedule-section">
         <div class="container">
-            <!-- Training Schedule -->
             <div class="training-block">
-                <h2><i class="fas fa-dumbbell"></i> Weekly Training</h2>
+                <h2><i class="fas fa-dumbbell"></i> <span data-en="Weekly Training" data-ne="साप्ताहिक प्रशिक्षण">Weekly Training</span></h2>
                 <div class="schedule-card">
-                    <div class="day">Every Friday</div>
+                    <div class="day" data-en="Every Friday" data-ne="हरेक शुक्रबार">Every Friday</div>
                     <div class="time">6:30 PM - 7:30 PM</div>
-                    <div class="venue">Barwa Al Baraha Ground</div>
-                    <div class="note">All members must report 10 minutes early</div>
+                    <div class="venue" data-en="Barwa Al Baraha Ground" data-ne="बर्वा अल बराहा मैदान">Barwa Al Baraha Ground</div>
+                    <div class="note" data-en="All members must report 10 minutes early" data-ne="सबै सदस्यहरू १० मिनेट अगाडि उपस्थित हुनुपर्छ">All members must report 10 minutes early</div>
                 </div>
             </div>
 
-            <!-- Upcoming Friendlies -->
             <div class="fixtures-block">
-                <h2>Upcoming Friendlies</h2>
+                <h2 data-en="Upcoming Friendlies" data-ne="आगामी मैत्रीपूर्ण खेलहरू">Upcoming Friendlies</h2>
                 <div class="match-list">
-                    <!-- EDIT: Update these matches -->
                     <div class="match-row">
                         <div class="match-date">
                             <span class="day">28</span>
-                            <span class="month">FEB</span>
+                            <span class="month" data-en="FEB" data-ne="फेब्रुअरी">FEB</span>
                         </div>
                         <div class="match-teams">
-                            <span class="team home">Global Force FC</span>
+                            <span class="team home" data-en="Global Force FC" data-ne="ग्लोबल फोर्स एफसी">Global Force FC</span>
                             <span class="vs">VS</span>
-                            <span class="team away">TBD</span>
+                            <span class="team away" data-en="TBD" data-ne="टीबीडी">TBD</span>
                         </div>
                         <div class="match-time">6:30 PM</div>
-                        <div class="match-status upcoming">UPCOMING</div>
-                    </div>
-
-                    <div class="match-row">
-                        <div class="match-date">
-                            <span class="day">07</span>
-                            <span class="month">MAR</span>
-                        </div>
-                        <div class="match-teams">
-                            <span class="team home">Global Force FC</span>
-                            <span class="vs">VS</span>
-                            <span class="team away">TBD</span>
-                        </div>
-                        <div class="match-time">6:30 PM</div>
-                        <div class="match-status upcoming">UPCOMING</div>
+                        <div class="match-status upcoming" data-en="UPCOMING" data-ne="आगामी">UPCOMING</div>
                     </div>
                 </div>
-                <a href="contact.html" class="btn btn-primary mt-2">Challenge Us for Friendly</a>
+                <a href="contact.html" class="btn btn-primary mt-2" data-en="Challenge Us for Friendly" data-ne="मैत्रीपूर्ण खेलका लागि चुनौती दिनुहोस्">Challenge Us for Friendly</a>
             </div>
 
-            <!-- Recent Results -->
             <div class="results-block">
-                <h2>Recent Results</h2>
+                <h2 data-en="Recent Results" data-ne="भर्खरका नतिजाहरू">Recent Results</h2>
                 <div class="results-list">
-                    <!-- EDIT: Update results -->
                     <div class="result-card win">
                         <div class="result-header">
                             <span class="date">15 Feb 2025</span>
-                            <span class="type">Friendly</span>
+                            <span class="type" data-en="Friendly" data-ne="मैत्रीपूर्ण">Friendly</span>
                         </div>
                         <div class="result-teams">
-                            <span class="team">Global Force FC</span>
+                            <span class="team" data-en="Global Force FC" data-ne="ग्लोबल फोर्स एफसी">Global Force FC</span>
                             <span class="score">3 - 1</span>
-                            <span class="team">Opponent FC</span>
+                            <span class="team" data-en="Opponent FC" data-ne="प्रतिद्वन्द्वी एफसी">Opponent FC</span>
                         </div>
                         <div class="scorers">
-                            <i class="fas fa-futbol"></i> Scorers: Player A, Player B, Player C
-                        </div>
-                    </div>
-
-                    <div class="result-card loss">
-                        <div class="result-header">
-                            <span class="date">08 Feb 2025</span>
-                            <span class="type">Tournament</span>
-                        </div>
-                        <div class="result-teams">
-                            <span class="team">Global Force FC</span>
-                            <span class="score">1 - 2</span>
-                            <span class="team">Rivals FC</span>
+                            <i class="fas fa-futbol"></i> <span data-en="Scorers: Player A, Player B, Player C" data-ne="गोलकर्ताहरू: खेलाडी अ, खेलाडी ब, खेलाडी स">Scorers: Player A, Player B, Player C</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tournaments -->
             <div class="tournaments-block">
-                <h2>Tournaments</h2>
+                <h2 data-en="Tournaments" data-ne="प्रतियोगिताहरू">Tournaments</h2>
                 <div class="tournament-cards">
                     <div class="tournament-card past">
-                        <div class="tournament-status">Completed</div>
-                        <h3>1-Day Cup</h3>
-                        <p class="format">4 Teams • Knockout</p>
-                        <p class="date">January 2025</p>
-                        <p class="result">Semi-Finalists</p>
-                    </div>
-                    <div class="tournament-card past">
-                        <div class="tournament-status">Completed</div>
-                        <h3>Weekend Championship</h3>
-                        <p class="format">8 Teams • Group + Knockout</p>
-                        <p class="date">February 2025</p>
-                        <p class="result">Quarter-Finalists</p>
+                        <div class="tournament-status" data-en="Completed" data-ne="सम्पन्न">Completed</div>
+                        <h3 data-en="1-Day Cup" data-ne="१-दिने कप">1-Day Cup</h3>
+                        <p class="format" data-en="4 Teams • Knockout" data-ne="४ टोलीहरू • नकआउट">4 Teams • Knockout</p>
+                        <p class="date" data-en="January 2025" data-ne="जनवरी २०२५">January 2025</p>
+                        <p class="result" data-en="Semi-Finalists" data-ne="सेमी-फाइनलिस्ट">Semi-Finalists</p>
                     </div>
                     <div class="tournament-card upcoming">
-                        <div class="tournament-status">Organizing</div>
-                        <h3>Global Force Cup</h3>
-                        <p class="format">8 Teams • Coming Soon</p>
-                        <p class="date">March 2025</p>
-                        <p class="info">Contact us to register your team</p>
+                        <div class="tournament-status" data-en="Organizing" data-ne="आयोजना हुँदै">Organizing</div>
+                        <h3 data-en="Global Force Cup" data-ne="ग्लोबल फोर्स कप">Global Force Cup</h3>
+                        <p class="format" data-en="8 Teams • Coming Soon" data-ne="८ टोलीहरू • चाँडै आउँदै">8 Teams • Coming Soon</p>
+                        <p class="date" data-en="March 2025" data-ne="मार्च २०२५">March 2025</p>
+                        <p class="info" data-en="Contact us to register your team" data-ne="तपाईंको टोली दर्ता गर्न सम्पर्क गर्नुहोस्">Contact us to register your team</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Money Friendlies Info -->
             <div class="money-friendlies">
-                <h2>Money Friendlies</h2>
-                <p>We organize competitive money friendlies for teams looking for high-stakes matches:</p>
+                <h2 data-en="Money Friendlies" data-ne="पैसा मैत्रीपूर्ण खेलहरू">Money Friendlies</h2>
+                <p data-en="We organize competitive money friendlies for teams looking for high-stakes matches:" data-ne="उच्च दाउवाल खेलहरू खोजिरहेका टोलीहरूका लागि हामी प्रतिस्पर्धात्मक पैसा मैत्रीपूर्ण खेलहरू आयोजना गर्छौं:">We organize competitive money friendlies for teams looking for high-stakes matches:</p>
                 <div class="pricing-cards">
                     <div class="price-card">
-                        <h4>Standard</h4>
+                        <h4 data-en="Standard" data-ne="मानक">Standard</h4>
                         <div class="amount">QAR 50</div>
-                        <p>Per team entry</p>
+                        <p data-en="Per team entry" data-ne="प्रति टोली प्रवेश">Per team entry</p>
                     </div>
                     <div class="price-card featured">
-                        <h4>Premium</h4>
+                        <h4 data-en="Premium" data-ne="प्रिमियम">Premium</h4>
                         <div class="amount">QAR 100</div>
-                        <p>Per team entry</p>
+                        <p data-en="Per team entry" data-ne="प्रति टोली प्रवेश">Per team entry</p>
                     </div>
                     <div class="price-card">
-                        <h4>Elite</h4>
+                        <h4 data-en="Elite" data-ne="एलीट">Elite</h4>
                         <div class="amount">QAR 200</div>
-                        <p>Per team entry</p>
+                        <p data-en="Per team entry" data-ne="प्रति टोली प्रवेश">Per team entry</p>
                     </div>
                 </div>
-                <p class="note"><i class="fas fa-info-circle"></i> Winner takes all. Professional referee provided. 9-a-side format.</p>
+                <p class="note"><i class="fas fa-info-circle"></i> <span data-en="Winner takes all. Professional referee provided. 9-a-side format." data-ne="विजेताले सबै लन्छ। पेशेवर रेफ्री उपलब्ध। ९-पक्षीय ढाँचा।">Winner takes all. Professional referee provided. 9-a-side format.</span></p>
             </div>
         </div>
     </section>
@@ -178,8 +146,8 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Global Force FC</h3>
-                    <p>Strength in Unity<br>Established 2025</p>
+                    <h3 data-en="Global Force FC" data-ne="ग्लोबल फोर्स एफसी">Global Force FC</h3>
+                    <p><span data-en="Strength in Unity" data-ne="एकतामा शक्ति">Strength in Unity</span><br>2025</p>
                     <div class="social-links">
                         <a href="https://facebook.com/YOUR_PAGE" target="_blank"><i class="fab fa-facebook"></i></a>
                         <a href="https://tiktok.com/YOUR_ACCOUNT" target="_blank"><i class="fab fa-tiktok"></i></a>
@@ -187,27 +155,56 @@
                     </div>
                 </div>
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
+                    <h3 data-en="Quick Links" data-ne="द्रुत लिङ्कहरू">Quick Links</h3>
                     <ul>
-                        <li><a href="schedule.html">Fixtures</a></li>
-                        <li><a href="stats.html">Player Stats</a></li>
-                        <li><a href="membership.html">Join Us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="schedule.html" data-en="Fixtures" data-ne="खेल तालिका">Fixtures</a></li>
+                        <li><a href="stats.html" data-en="Player Stats" data-ne="खेलाडी तथ्यांक">Player Stats</a></li>
+                        <li><a href="membership.html" data-en="Join Us" data-ne="हामीसँग सामेल हुनुहोस्">Join Us</a></li>
+                        <li><a href="contact.html" data-en="Contact" data-ne="सम्पर्क">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Barwa Al Baraha, Qatar</p>
-                    <p><i class="fas fa-clock"></i> Practice: Fri 6:30-7:30 PM</p>
+                    <h3 data-en="Contact" data-ne="सम्पर्क">Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> <span data-en="Barwa Al Baraha, Qatar" data-ne="बर्वा अल बराहा, कतार">Barwa Al Baraha, Qatar</span></p>
+                    <p><i class="fas fa-clock"></i> <span data-en="Practice: Fri 6:30-7:30 PM" data-ne="प्रशिक्षण: शुक्रबार ६:३०-७:३० बजे">Practice: Fri 6:30-7:30 PM</span></p>
                     <p><i class="fas fa-envelope"></i> secretary@globalforcefc.com</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Global Force FC. All rights reserved.</p>
+                <p>&copy; 2025 <span data-en="Global Force FC. All rights reserved." data-ne="ग्लोबल फोर्स एफसी। सर्वाधिकार सुरक्षित।">Global Force FC. All rights reserved.</span></p>
             </div>
         </div>
     </footer>
 
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const langToggle = document.getElementById('langToggle');
+            const elements = document.querySelectorAll('[data-en][data-ne]');
+            const savedLang = localStorage.getItem('gffc-language') || 'en';
+            setLanguage(savedLang);
+            
+            langToggle.addEventListener('click', function() {
+                const currentLang = localStorage.getItem('gffc-language') || 'en';
+                const newLang = currentLang === 'en' ? 'ne' : 'en';
+                setLanguage(newLang);
+                localStorage.setItem('gffc-language', newLang);
+            });
+            
+            function setLanguage(lang) {
+                elements.forEach(element => {
+                    element.textContent = element.getAttribute('data-' + lang);
+                });
+                const flag = langToggle.querySelector('.flag');
+                if (lang === 'ne') {
+                    flag.textContent = '🇬🇧';
+                    document.body.classList.add('nepali');
+                } else {
+                    flag.textContent = '🇳🇵';
+                    document.body.classList.remove('nepali');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
