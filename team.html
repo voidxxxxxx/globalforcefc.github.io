@@ -3,123 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teams - Global Force FC</title>
+    <title data-en="Teams - Global Force FC" data-ne="टोलीहरू - ग्लोबल फोर्स एफसी">Teams - Global Force FC</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    <base href="/globalforcefc.github.io/">
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <div class="logo">
                 <img src="assets/logo.png" alt="Global Force FC">
-                <span>GLOBAL FORCE FC</span>
+                <span data-en="GLOBAL FORCE FC" data-ne="ग्लोबल फोर्स एफसी">GLOBAL FORCE FC</span>
+            </div>
+            <div class="language-switcher">
+                <button id="langToggle" class="lang-btn">
+                    <span class="flag">🇳🇵</span>
+                    <span class="lang-text" data-en="नेपाली" data-ne="English">नेपाली</span>
+                </button>
             </div>
             <div class="nav-toggle" id="navToggle">
                 <i class="fas fa-bars"></i>
             </div>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="team.html" class="active">Teams</a></li>
-                <li><a href="schedule.html">Schedule</a></li>
-                <li><a href="stats.html">Statistics</a></li>
-                <li><a href="membership.html">Membership</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.html" data-en="Home" data-ne="गृहपृष्ठ">Home</a></li>
+                <li><a href="about.html" data-en="About" data-ne="हाम्रो बारेमा">About</a></li>
+                <li><a href="team.html" class="active" data-en="Teams" data-ne="टोलीहरू">Teams</a></li>
+                <li><a href="schedule.html" data-en="Schedule" data-ne="तालिका">Schedule</a></li>
+                <li><a href="stats.html" data-en="Statistics" data-ne="तथ्यांक">Statistics</a></li>
+                <li><a href="membership.html" data-en="Membership" data-ne="सदस्यता">Membership</a></li>
+                <li><a href="gallery.html" data-en="Gallery" data-ne="ग्यालेरी">Gallery</a></li>
+                <li><a href="contact.html" data-en="Contact" data-ne="सम्पर्क">Contact</a></li>
             </ul>
         </div>
     </nav>
 
     <section class="page-header">
         <div class="container">
-            <h1>Our Teams</h1>
-            <p>Squad Lists & Management</p>
+            <h1 data-en="Our Teams" data-ne="हाम्रो टोलीहरू">Our Teams</h1>
+            <p data-en="Squad Lists & Management" data-ne="टोली सूची र व्यवस्थापन">Squad Lists & Management</p>
         </div>
     </section>
 
-    <!-- Management Board -->
     <section class="management">
         <div class="container">
-            <h2 class="section-title">Board Members</h2>
+            <h2 class="section-title" data-en="Board Members" data-ne="बोर्ड सदस्यहरू">Board Members</h2>
             <div class="board-grid">
                 <div class="board-card president">
-                    <div class="role-badge">President</div>
+                    <div class="role-badge" data-en="President" data-ne="अध्यक्ष">President</div>
                     <h3>[President Name]</h3>
-                    <p>Club Leader</p>
-                    <span class="year">2025-Present</span>
+                    <p data-en="Club Leader" data-ne="क्लब प्रमुख">Club Leader</p>
+                    <span class="year">2025-<span data-en="Present" data-ne="हाल">Present</span></span>
                 </div>
                 <div class="board-card">
-                    <div class="role-badge">Vice President</div>
+                    <div class="role-badge" data-en="Vice President" data-ne="उपाध्यक्ष">Vice President</div>
                     <h3>[VP Name]</h3>
-                    <p>Operations</p>
+                    <p data-en="Operations" data-ne="सञ्चालन">Operations</p>
                 </div>
                 <div class="board-card highlight">
-                    <div class="role-badge">Secretary</div>
+                    <div class="role-badge" data-en="Secretary" data-ne="सचिव">Secretary</div>
                     <h3>[Your Name]</h3>
-                    <p>Administration & Website</p>
+                    <p data-en="Administration & Website" data-ne="प्रशासन र वेबसाइट">Administration & Website</p>
                 </div>
                 <div class="board-card">
-                    <div class="role-badge">Vice Secretary</div>
+                    <div class="role-badge" data-en="Vice Secretary" data-ne="उपसचिव">Vice Secretary</div>
                     <h3>[Vice Sec Name]</h3>
-                    <p>Assistant Admin</p>
+                    <p data-en="Assistant Admin" data-ne="सहायक प्रशासक">Assistant Admin</p>
                 </div>
                 <div class="board-card">
-                    <div class="role-badge">Treasurer</div>
+                    <div class="role-badge" data-en="Treasurer" data-ne="कोषाध्यक्ष">Treasurer</div>
                     <h3>[Treasurer Name]</h3>
-                    <p>Finance & Fees</p>
+                    <p data-en="Finance & Fees" data-ne="वित्त र शुल्क">Finance & Fees</p>
                 </div>
-                <!-- Advisors -->
                 <div class="board-card advisor">
-                    <div class="role-badge">Advisor 1</div>
+                    <div class="role-badge" data-en="Advisor 1" data-ne="सल्लाहकार १">Advisor 1</div>
                     <h3>[Advisor Name]</h3>
                 </div>
                 <div class="board-card advisor">
-                    <div class="role-badge">Advisor 2</div>
+                    <div class="role-badge" data-en="Advisor 2" data-ne="सल्लाहकार २">Advisor 2</div>
                     <h3>[Advisor Name]</h3>
                 </div>
                 <div class="board-card advisor">
-                    <div class="role-badge">Advisor 3</div>
+                    <div class="role-badge" data-en="Advisor 3" data-ne="सल्लाहकार ३">Advisor 3</div>
                     <h3>[Advisor Name]</h3>
                 </div>
                 <div class="board-card advisor">
-                    <div class="role-badge">Advisor 4</div>
+                    <div class="role-badge" data-en="Advisor 4" data-ne="सल्लाहकार ४">Advisor 4</div>
                     <h3>[Advisor Name]</h3>
                 </div>
                 <div class="board-card advisor">
-                    <div class="role-badge">Advisor 5</div>
+                    <div class="role-badge" data-en="Advisor 5" data-ne="सल्लाहकार ५">Advisor 5</div>
                     <h3>[Advisor Name]</h3>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 1st Team -->
     <section class="squad first-team">
         <div class="container">
             <div class="team-header">
-                <h2>1st Team</h2>
-                <span class="team-badge">Elite Squad</span>
-                <p class="team-desc">Main tournament squad selected based on performance, attendance, and match impact.</p>
+                <h2 data-en="1st Team" data-ne="पहिलो टोली">1st Team</h2>
+                <span class="team-badge" data-en="Elite Squad" data-ne="एलीट टोली">Elite Squad</span>
+                <p class="team-desc" data-en="Main tournament squad selected based on performance, attendance, and match impact." data-ne="प्रदर्शन, उपस्थिति र खेल प्रभावका आधारमा छानिएको मुख्य प्रतियोगिता टोली।">Main tournament squad selected based on performance, attendance, and match impact.</p>
             </div>
             
             <div class="players-table-container">
                 <table class="players-table">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Player Name</th>
-                            <th>Position</th>
-                            <th>Goals</th>
-                            <th>Assists</th>
-                            <th>Matches</th>
+                            <th data-en="#" data-ne="नं">#</th>
+                            <th data-en="Player Name" data-ne="खेलाडीको नाम">Player Name</th>
+                            <th data-en="Position" data-ne="स्थान">Position</th>
+                            <th data-en="Goals" data-ne="गोलहरू">Goals</th>
+                            <th data-en="Assists" data-ne="असिस्टहरू">Assists</th>
+                            <th data-en="Matches" data-ne="खेलहरू">Matches</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- EDIT: Add your 1st team players here -->
                         <tr>
                             <td>1</td>
                             <td>[Goalkeeper Name]</td>
-                            <td>GK</td>
+                            <td data-en="GK" data-ne="गोलकिपर">GK</td>
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
@@ -127,7 +131,7 @@
                         <tr>
                             <td>2</td>
                             <td>[Defender Name]</td>
-                            <td>DEF</td>
+                            <td data-en="DEF" data-ne="डिफेन्डर">DEF</td>
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
@@ -135,50 +139,47 @@
                         <tr>
                             <td>10</td>
                             <td>[Striker Name]</td>
-                            <td>FWD</td>
+                            <td data-en="FWD" data-ne="फर्वार्ड">FWD</td>
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
                         </tr>
-                        <!-- Copy and paste the row above to add more players -->
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
 
-    <!-- 2nd Team -->
     <section class="squad second-team">
         <div class="container">
             <div class="team-header">
-                <h2>2nd Team</h2>
-                <span class="team-badge dev">Development</span>
-                <p class="team-desc">Reserve and development squad. Players here work toward promotion to 1st Team through training performance.</p>
+                <h2 data-en="2nd Team" data-ne="दोस्रो टोली">2nd Team</h2>
+                <span class="team-badge dev" data-en="Development" data-ne="विकास">Development</span>
+                <p class="team-desc" data-en="Reserve and development squad. Players here work toward promotion to 1st Team through training performance." data-ne="आरक्ष र विकास टोली। यहाँका खेलाडीहरू प्रशिक्षण प्रदर्शन मार्फत पहिलो टोलीमा बढुवाको लक्ष्य राख्छन्।">Reserve and development squad. Players here work toward promotion to 1st Team through training performance.</p>
             </div>
             
             <div class="players-table-container">
                 <table class="players-table">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Player Name</th>
-                            <th>Position</th>
-                            <th>Status</th>
+                            <th data-en="#" data-ne="नं">#</th>
+                            <th data-en="Player Name" data-ne="खेलाडीको नाम">Player Name</th>
+                            <th data-en="Position" data-ne="स्थान">Position</th>
+                            <th data-en="Status" data-ne="स्थिति">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- EDIT: Add your 2nd team players here -->
                         <tr>
                             <td>15</td>
                             <td>[Player Name]</td>
-                            <td>MID</td>
-                            <td><span class="badge training">Training</span></td>
+                            <td data-en="MID" data-ne="मिडफिल्डर">MID</td>
+                            <td><span class="badge training" data-en="Training" data-ne="प्रशिक्षण">Training</span></td>
                         </tr>
                         <tr>
                             <td>16</td>
                             <td>[Player Name]</td>
-                            <td>DEF</td>
-                            <td><span class="badge training">Training</span></td>
+                            <td data-en="DEF" data-ne="डिफेन्डर">DEF</td>
+                            <td><span class="badge training" data-en="Training" data-ne="प्रशिक्षण">Training</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -186,7 +187,10 @@
 
             <div class="promotion-note">
                 <i class="fas fa-info-circle"></i>
-                <p><strong>Promotion System:</strong> 2nd Team players can be promoted to 1st Team based on training attendance, friendly match performance, and team needs. 1st Team players may be rotated to 2nd Team to maintain competitiveness.</p>
+                <p data-en="Promotion System: 2nd Team players can be promoted to 1st Team based on training attendance, friendly match performance, and team needs. 1st Team players may be rotated to 2nd Team to maintain competitiveness."
+                   data-ne="बढुवा प्रणाली: दोस्रो टोलीका खेलाडीहरू प्रशिक्षण उपस्थिति, मैत्रीपूर्ण खेल प्रदर्शन र टोली आवश्यकताका आधारमा पहिलो टोलीमा बढुवा हुन सक्छन्। प्रतिस्पर्धात्मकता कायम राख्न पहिलो टोलीका खेलाडीहरूलाई दोस्रो टोलीमा घुमाउन सकिन्छ।">
+                   Promotion System: 2nd Team players can be promoted to 1st Team based on training attendance, friendly match performance, and team needs. 1st Team players may be rotated to 2nd Team to maintain competitiveness.
+                </p>
             </div>
         </div>
     </section>
@@ -195,8 +199,8 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Global Force FC</h3>
-                    <p>Strength in Unity<br>Established 2025</p>
+                    <h3 data-en="Global Force FC" data-ne="ग्लोबल फोर्स एफसी">Global Force FC</h3>
+                    <p><span data-en="Strength in Unity" data-ne="एकतामा शक्ति">Strength in Unity</span><br>2025</p>
                     <div class="social-links">
                         <a href="https://facebook.com/YOUR_PAGE" target="_blank"><i class="fab fa-facebook"></i></a>
                         <a href="https://tiktok.com/YOUR_ACCOUNT" target="_blank"><i class="fab fa-tiktok"></i></a>
@@ -204,27 +208,56 @@
                     </div>
                 </div>
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
+                    <h3 data-en="Quick Links" data-ne="द्रुत लिङ्कहरू">Quick Links</h3>
                     <ul>
-                        <li><a href="schedule.html">Fixtures</a></li>
-                        <li><a href="stats.html">Player Stats</a></li>
-                        <li><a href="membership.html">Join Us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="schedule.html" data-en="Fixtures" data-ne="खेल तालिका">Fixtures</a></li>
+                        <li><a href="stats.html" data-en="Player Stats" data-ne="खेलाडी तथ्यांक">Player Stats</a></li>
+                        <li><a href="membership.html" data-en="Join Us" data-ne="हामीसँग सामेल हुनुहोस्">Join Us</a></li>
+                        <li><a href="contact.html" data-en="Contact" data-ne="सम्पर्क">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Barwa Al Baraha, Qatar</p>
-                    <p><i class="fas fa-clock"></i> Practice: Fri 6:30-7:30 PM</p>
+                    <h3 data-en="Contact" data-ne="सम्पर्क">Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> <span data-en="Barwa Al Baraha, Qatar" data-ne="बर्वा अल बराहा, कतार">Barwa Al Baraha, Qatar</span></p>
+                    <p><i class="fas fa-clock"></i> <span data-en="Practice: Fri 6:30-7:30 PM" data-ne="प्रशिक्षण: शुक्रबार ६:३०-७:३० बजे">Practice: Fri 6:30-7:30 PM</span></p>
                     <p><i class="fas fa-envelope"></i> secretary@globalforcefc.com</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Global Force FC. All rights reserved.</p>
+                <p>&copy; 2025 <span data-en="Global Force FC. All rights reserved." data-ne="ग्लोबल फोर्स एफसी। सर्वाधिकार सुरक्षित।">Global Force FC. All rights reserved.</span></p>
             </div>
         </div>
     </footer>
 
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const langToggle = document.getElementById('langToggle');
+            const elements = document.querySelectorAll('[data-en][data-ne]');
+            const savedLang = localStorage.getItem('gffc-language') || 'en';
+            setLanguage(savedLang);
+            
+            langToggle.addEventListener('click', function() {
+                const currentLang = localStorage.getItem('gffc-language') || 'en';
+                const newLang = currentLang === 'en' ? 'ne' : 'en';
+                setLanguage(newLang);
+                localStorage.setItem('gffc-language', newLang);
+            });
+            
+            function setLanguage(lang) {
+                elements.forEach(element => {
+                    element.textContent = element.getAttribute('data-' + lang);
+                });
+                const flag = langToggle.querySelector('.flag');
+                if (lang === 'ne') {
+                    flag.textContent = '🇬🇧';
+                    document.body.classList.add('nepali');
+                } else {
+                    flag.textContent = '🇳🇵';
+                    document.body.classList.remove('nepali');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
