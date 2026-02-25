@@ -1,384 +1,700 @@
-<!-- TOURNAMENT BRACKET SECTION -->
-<section class="bracket-section" style="padding: 80px 20px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
-    <div class="container">
-        <div class="section-header" style="text-align: center; margin-bottom: 50px;">
-            <h2 style="font-size: 3em; color: #fff; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px;">
-                🏆 Tournament Brackets
-            </h2>
-            <p style="color: #94a3b8; font-size: 1.2em;">Generate fillable tie sheets for any number of teams (4-32)</p>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Brackets | Global Force FC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        <!-- Controls -->
-        <div class="bracket-controls" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 40px; margin-bottom: 40px;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                <div>
-                    <label style="display: block; color: #10b981; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; font-size: 0.9em;">Tournament Name</label>
-                    <input type="text" id="tournamentName" placeholder="e.g., Gen-Z Cup 2026" value="Upcoming Tournament" 
-                           style="width: 100%; padding: 15px; background: rgba(15,23,42,0.8); border: 2px solid #334155; color: #fff; border-radius: 10px; font-size: 16px;">
-                </div>
-                <div>
-                    <label style="display: block; color: #10b981; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; font-size: 0.9em;">Number of Teams</label>
-                    <input type="number" id="teamCount" min="2" max="32" value="22" 
-                           style="width: 100%; padding: 15px; background: rgba(15,23,42,0.8); border: 2px solid #334155; color: #fff; border-radius: 10px; font-size: 16px;">
-                </div>
-            </div>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-                <button onclick="generateTeamInputs()" class="btn btn-secondary" style="padding: 15px 30px; background: #3b82f6; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s;">Update Team List</button>
-                <button onclick="autoFillTeams()" class="btn btn-secondary" style="padding: 15px 30px; background: #64748b; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s;">Auto-Fill Teams</button>
-                <button onclick="generateBracket()" class="btn btn-primary" style="padding: 15px 40px; background: #10b981; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 1.1em; box-shadow: 0 4px 15px rgba(16,185,129,0.3); transition: all 0.3s;">🎯 Generate Bracket</button>
-            </div>
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-            <!-- Team List -->
-            <div id="teamListContainer" style="margin-top: 30px; max-height: 400px; overflow-y: auto;">
-                <div id="teamInputs" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;"></div>
-            </div>
-        </div>
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #dc2626;
+            margin-bottom: 30px;
+        }
 
-        <!-- Bracket Display -->
-        <div id="bracketWrapper" style="display: none; background: rgba(255,255,255,0.02); border-radius: 20px; padding: 40px; border: 1px solid rgba(255,255,255,0.05);">
-            <h3 id="displayTournamentName" style="text-align: center; color: #10b981; font-size: 2em; margin-bottom: 30px; text-transform: uppercase;"></h3>
+        h1 {
+            font-size: 2.5em;
+            color: #dc2626;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1.1em;
+        }
+
+        .controls {
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .control-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #cbd5e1;
+            min-width: 150px;
+        }
+
+        input[type="number"], input[type="text"], select {
+            padding: 10px 15px;
+            border: 2px solid #334155;
+            background: #0f172a;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 16px;
+            min-width: 200px;
+        }
+
+        button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
+        }
+
+        .btn-secondary {
+            background: #3b82f6;
+        }
+
+        .btn-secondary:hover {
+            background: #2563eb;
+        }
+
+        .btn-success {
+            background: #10b981;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .bracket-container {
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .bracket {
+            display: flex;
+            gap: 40px;
+            min-width: max-content;
+            padding: 20px;
+        }
+
+        .round {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            min-width: 250px;
+        }
+
+        .round-title {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #dc2626;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .match {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #334155;
+            border-radius: 12px;
+            margin: 10px 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .match:hover {
+            border-color: #dc2626;
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .match-team {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #334155;
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .match-team:last-child {
+            border-bottom: none;
+        }
+
+        .match-team input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            width: 140px;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .match-team input:focus {
+            background: rgba(220, 38, 38, 0.1);
+            outline: none;
+            border: 1px solid #dc2626;
+        }
+
+        .score-input {
+            width: 50px !important;
+            text-align: center;
+            font-weight: bold;
+            background: rgba(255,255,255,0.1) !important;
+        }
+
+        .winner {
+            background: rgba(220, 38, 38, 0.2) !important;
+            border-left: 4px solid #dc2626;
+        }
+
+        .champion {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+            border: 3px solid #fbbf24;
+        }
+
+        .champion h2 {
+            color: #fbbf24;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .champion-name {
+            font-size: 2.5em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .team-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .team-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .team-input input {
+            flex: 1;
+            padding: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #334155;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .remove-team {
+            background: #ef4444;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .bracket {
+                flex-direction: column;
+                gap: 20px;
+            }
             
-            <div style="overflow-x: auto; padding: 20px 0;">
-                <div id="bracket" style="display: flex; gap: 50px; min-width: max-content;">
-                    <!-- Bracket rounds generated here -->
-                </div>
+            .round {
+                min-width: 100%;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        .save-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            padding: 15px 25px;
+            border-radius: 8px;
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏆 Tournament Brackets</h1>
+            <p class="subtitle">Global Force FC - Gen-Z Tournament & Friendly Matches</p>
+        </header>
+
+        <div class="info-box">
+            <strong>💡 How to use:</strong> Enter team names below → Click "Generate Bracket" → Click on team names/scores to edit → Data auto-saves to your browser
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Tournament Name:</label>
+                <input type="text" id="tournamentName" placeholder="e.g., Gen-Z 1-Day Tournament" value="Gen-Z Tournament 2026">
             </div>
 
-            <!-- Champion Display -->
-            <div id="championDisplay" style="display: none; background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 40px; border-radius: 20px; text-align: center; margin-top: 40px; border: 3px solid #fbbf24; box-shadow: 0 10px 40px rgba(16,185,129,0.3);">
-                <div style="font-size: 3em; margin-bottom: 10px;">🏆</div>
-                <h3 style="color: #fbbf24; font-size: 1.5em; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 3px;">Champion</h3>
-                <div id="championName" style="font-size: 2.5em; font-weight: bold; color: white; text-transform: uppercase; letter-spacing: 2px;">-</div>
+            <div class="control-group">
+                <label>Number of Teams:</label>
+                <input type="number" id="teamCount" min="2" max="32" value="16" onchange="generateTeamInputs()">
+                <button onclick="generateTeamInputs()" class="btn-secondary">Update Team List</button>
+                <button onclick="autoFillTeams()" class="btn-secondary">Auto-Fill (Team 1, Team 2...)</button>
+            </div>
+
+            <div id="teamInputs" class="team-list">
+                <!-- Team inputs generated here -->
+            </div>
+
+            <div class="control-group" style="margin-top: 20px;">
+                <button onclick="generateBracket()">🎯 Generate Bracket</button>
+                <button onclick="clearBracket()" class="btn-secondary">Clear All</button>
+                <button onclick="exportData()" class="btn-success">💾 Save to File</button>
+                <input type="file" id="importFile" style="display:none" onchange="importData(this)">
+                <button onclick="document.getElementById('importFile').click()" class="btn-secondary">📁 Load from File</button>
             </div>
         </div>
 
-        <!-- Action Buttons -->
-        <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
-            <button onclick="clearBracket()" style="padding: 12px 25px; background: #ef4444; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Clear All</button>
-            <button onclick="exportData()" style="padding: 12px 25px; background: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">💾 Save to File</button>
-            <input type="file" id="importFile" style="display: none;" onchange="importData(this)">
-            <button onclick="document.getElementById('importFile').click()" style="padding: 12px 25px; background: #f59e0b; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">📁 Load File</button>
+        <div id="bracketContainer" style="display:none;">
+            <h2 id="displayTournamentName" style="text-align: center; margin-bottom: 30px; color: #fbbf24;"></h2>
+            <div class="bracket-container">
+                <div id="bracket" class="bracket">
+                    <!-- Bracket generated here -->
+                </div>
+            </div>
+            <div id="championDisplay" class="champion" style="display:none;">
+                <h2>🏆 CHAMPION</h2>
+                <div class="champion-name" id="championName">-</div>
+            </div>
         </div>
     </div>
-</section>
 
-<style>
-    .match-box {
-        background: rgba(255,255,255,0.05);
-        border: 2px solid #334155;
-        border-radius: 12px;
-        margin: 20px 0;
-        overflow: hidden;
-        min-width: 220px;
-        transition: all 0.3s;
-    }
-    
-    .match-box:hover {
-        border-color: #10b981;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 20px rgba(16,185,129,0.2);
-    }
-    
-    .match-team-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 15px;
-        border-bottom: 1px solid #334155;
-        background: rgba(15,23,42,0.6);
-    }
-    
-    .match-team-row:last-child {
-        border-bottom: none;
-    }
-    
-    .match-team-row.winner {
-        background: rgba(16,185,129,0.15);
-        border-left: 4px solid #10b981;
-    }
-    
-    .team-name-input {
-        background: transparent;
-        border: none;
-        color: #fff;
-        font-size: 14px;
-        width: 130px;
-        padding: 5px;
-        border-radius: 4px;
-    }
-    
-    .team-name-input:focus {
-        background: rgba(16,185,129,0.1);
-        outline: 1px solid #10b981;
-    }
-    
-    .score-input {
-        width: 45px !important;
-        text-align: center;
-        background: rgba(255,255,255,0.1) !important;
-        border: 1px solid #475569 !important;
-        color: #fff;
-        padding: 5px;
-        border-radius: 6px;
-        font-weight: bold;
-    }
-    
-    .round-column {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-    }
-    
-    .round-title {
-        text-align: center;
-        color: #10b981;
-        font-weight: bold;
-        font-size: 1.1em;
-        margin-bottom: 20px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        border-bottom: 2px solid #10b981;
-        padding-bottom: 10px;
-    }
-    
-    .connector {
-        display: flex;
-        align-items: center;
-        color: #475569;
-        font-size: 24px;
-        padding: 0 10px;
-    }
-    
-    @media (max-width: 768px) {
-        #bracket {
-            flex-direction: column;
-            gap: 30px !important;
-        }
-        .match-box {
-            min-width: 280px;
-        }
-    }
-</style>
+    <div class="save-status" id="saveStatus">✅ Saved!</div>
 
-<script>
-    let currentTeams = [];
+    <script>
+        let currentBracket = [];
+        let teams = [];
 
-    function generateTeamInputs() {
-        const count = parseInt(document.getElementById('teamCount').value) || 22;
-        const container = document.getElementById('teamInputs');
-        container.innerHTML = '';
-        
-        for (let i = 0; i < count; i++) {
-            const div = document.createElement('div');
-            div.style.cssText = 'display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);';
-            div.innerHTML = `
-                <span style="color: #10b981; font-weight: bold; min-width: 30px;">${i+1}.</span>
-                <input type="text" id="team${i}" placeholder="Team ${i+1}" style="flex: 1; background: transparent; border: none; color: #fff; padding: 5px; font-size: 14px;">
-            `;
-            container.appendChild(div);
-        }
-    }
+        // Load saved data on startup
+        window.onload = function() {
+            const saved = localStorage.getItem('gffc_tournament');
+            if (saved) {
+                const data = JSON.parse(saved);
+                document.getElementById('tournamentName').value = data.name || '';
+                if (data.teams && data.teams.length > 0) {
+                    document.getElementById('teamCount').value = data.teams.length;
+                    generateTeamInputs();
+                    // Fill in saved team names
+                    const inputs = document.querySelectorAll('.team-input input[type="text"]');
+                    data.teams.forEach((team, idx) => {
+                        if (inputs[idx]) inputs[idx].value = team;
+                    });
+                }
+                if (data.bracket) {
+                    generateBracket();
+                    setTimeout(() => restoreBracketData(data.bracket), 100);
+                }
+            } else {
+                generateTeamInputs();
+            }
+        };
 
-    function autoFillTeams() {
-        const inputs = document.querySelectorAll('#teamInputs input');
-        inputs.forEach((input, idx) => {
-            if (!input.value) input.value = `Team ${idx + 1}`;
-        });
-    }
-
-    function generateBracket() {
-        currentTeams = [];
-        const inputs = document.querySelectorAll('#teamInputs input');
-        inputs.forEach(input => {
-            currentTeams.push(input.value || 'TBD');
-        });
-
-        if (currentTeams.length < 2) {
-            alert('Please add at least 2 teams!');
-            return;
-        }
-
-        // Calculate bracket size (next power of 2)
-        const teamCount = currentTeams.length;
-        const rounds = Math.ceil(Math.log2(teamCount));
-        const bracketSize = Math.pow(2, rounds);
-        
-        // Pad with BYEs
-        while (currentTeams.length < bracketSize) {
-            currentTeams.push('BYE');
-        }
-
-        document.getElementById('displayTournamentName').textContent = document.getElementById('tournamentName').value;
-        document.getElementById('bracketWrapper').style.display = 'block';
-        
-        const bracketDiv = document.getElementById('bracket');
-        bracketDiv.innerHTML = '';
-        
-        let roundTeams = [...currentTeams];
-        
-        for (let r = 0; r < rounds; r++) {
-            const roundDiv = document.createElement('div');
-            roundDiv.className = 'round-column';
+        function generateTeamInputs() {
+            const count = parseInt(document.getElementById('teamCount').value);
+            const container = document.getElementById('teamInputs');
+            container.innerHTML = '';
+            teams = [];
             
-            const roundName = r === rounds - 1 ? 'Final' : 
-                             r === rounds - 2 ? 'Semi Final' : 
-                             r === rounds - 3 ? 'Quarter Final' : 
-                             `Round ${r + 1}`;
+            for (let i = 0; i < count; i++) {
+                const div = document.createElement('div');
+                div.className = 'team-input';
+                div.innerHTML = `
+                    <span style="color:#64748b;width:30px;">${i+1}.</span>
+                    <input type="text" placeholder="Team ${i+1} Name" id="team${i}" onchange="saveToStorage()">
+                    <button class="remove-team" onclick="removeTeam(${i})" title="Remove">×</button>
+                `;
+                container.appendChild(div);
+            }
+        }
+
+        function autoFillTeams() {
+            const inputs = document.querySelectorAll('.team-input input[type="text"]');
+            inputs.forEach((input, idx) => {
+                if (!input.value) input.value = `Team ${idx + 1}`;
+            });
+        }
+
+        function removeTeam(index) {
+            const input = document.getElementById(`team${index}`);
+            input.value = '';
+            input.placeholder = 'BYE (Auto-win)';
+        }
+
+        function generateBracket() {
+            // Collect teams
+            teams = [];
+            const inputs = document.querySelectorAll('.team-input input[type="text"]');
+            inputs.forEach(input => {
+                teams.push(input.value || 'TBD');
+            });
+
+            if (teams.length < 2) {
+                alert('Please add at least 2 teams!');
+                return;
+            }
+
+            // Filter out empty teams for bracket generation
+            const activeTeams = teams.filter(t => t && t !== '');
+            const teamCount = activeTeams.length;
             
-            roundDiv.innerHTML = `<div class="round-title">${roundName}</div>`;
+            // Calculate rounds needed
+            const rounds = Math.ceil(Math.log2(teamCount));
+            const bracketSize = Math.pow(2, rounds);
             
-            const nextRoundTeams = [];
+            // Pad with byes if necessary
+            let bracketTeams = [...activeTeams];
+            while (bracketTeams.length < bracketSize) {
+                bracketTeams.push('BYE');
+            }
+
+            // Shuffle for random bracket (optional - remove if you want fixed order)
+            // bracketTeams.sort(() => Math.random() - 0.5);
+
+            document.getElementById('displayTournamentName').textContent = document.getElementById('tournamentName').value;
+            document.getElementById('bracketContainer').style.display = 'block';
             
-            for (let m = 0; m < roundTeams.length; m += 2) {
-                const team1 = roundTeams[m];
-                const team2 = roundTeams[m+1];
-                const matchId = `r${r}m${m/2}`;
-                const isBye = team2 === 'BYE';
+            const bracketDiv = document.getElementById('bracket');
+            bracketDiv.innerHTML = '';
+            currentBracket = [];
+
+            // Generate rounds
+            let currentRound = bracketTeams;
+            
+            for (let r = 0; r < rounds; r++) {
+                const roundDiv = document.createElement('div');
+                roundDiv.className = 'round';
                 
-                const matchBox = document.createElement('div');
-                matchBox.className = 'match-box';
-                matchBox.innerHTML = `
-                    <div class="match-team-row ${isBye ? 'winner' : ''}" id="${matchId}t1">
-                        <input type="text" class="team-name-input" value="${team1}" ${team1 === 'BYE' ? 'readonly' : ''}>
-                        ${team1 !== 'BYE' ? `<input type="number" class="score-input" min="0" onchange="updateWinner('${matchId}')">` : ''}
-                    </div>
-                    <div class="match-team-row" id="${matchId}t2" style="${isBye ? 'opacity:0.3' : ''}">
-                        <input type="text" class="team-name-input" value="${team2}" ${team2 === 'BYE' || isBye ? 'readonly' : ''}>
-                        ${team2 !== 'BYE' && !isBye ? `<input type="number" class="score-input" min="0" onchange="updateWinner('${matchId}')">` : ''}
+                const roundName = r === rounds - 1 ? 'Final' : 
+                                 r === rounds - 2 ? 'Semi Final' : 
+                                 r === rounds - 3 ? 'Quarter Final' : 
+                                 `Round ${r + 1}`;
+                
+                roundDiv.innerHTML = `<div class="round-title">${roundName}</div>`;
+                
+                const matches = [];
+                for (let m = 0; m < currentRound.length; m += 2) {
+                    const match = document.createElement('div');
+                    match.className = 'match';
+                    
+                    const team1 = currentRound[m] || 'TBD';
+                    const team2 = currentRound[m+1] || 'TBD';
+                    const matchId = `r${r}m${m/2}`;
+                    
+                    // Check if bye
+                    const isBye = team2 === 'BYE' || team2 === '';
+                    
+                    match.innerHTML = `
+                        <div class="match-team ${isBye ? 'winner' : ''}" id="${matchId}t1">
+                            <input type="text" value="${team1}" placeholder="Team Name" onchange="updateMatch('${matchId}')">
+                            <input type="number" class="score-input" placeholder="0" min="0" onchange="updateWinner('${matchId}')" id="${matchId}s1">
+                        </div>
+                        <div class="match-team" id="${matchId}t2" style="${isBye ? 'opacity:0.5' : ''}">
+                            <input type="text" value="${isBye ? 'BYE' : team2}" placeholder="Team Name" ${isBye ? 'readonly' : ''} onchange="updateMatch('${matchId}')">
+                            ${!isBye ? `<input type="number" class="score-input" placeholder="0" min="0" onchange="updateWinner('${matchId}')" id="${matchId}s2">` : ''}
+                        </div>
+                    `;
+                    
+                    roundDiv.appendChild(match);
+                    matches.push({id: matchId, team1, team2, winner: isBye ? team1 : null});
+                }
+                
+                bracketDiv.appendChild(roundDiv);
+                currentBracket.push(matches);
+                
+                // Prepare next round (empty)
+                currentRound = new Array(matches.length).fill('TBD');
+            }
+
+            // Add Third Place match if Semi Final exists
+            if (rounds >= 2) {
+                const thirdPlaceDiv = document.createElement('div');
+                thirdPlaceDiv.className = 'round';
+                thirdPlaceDiv.innerHTML = `<div class="round-title">3rd Place</div>`;
+                thirdPlaceDiv.innerHTML += `
+                    <div class="match">
+                        <div class="match-team" id="third1">
+                            <input type="text" placeholder="Semi Final Loser 1" readonly>
+                            <input type="number" class="score-input" placeholder="0">
+                        </div>
+                        <div class="match-team" id="third2">
+                            <input type="text" placeholder="Semi Final Loser 2" readonly>
+                            <input type="number" class="score-input" placeholder="0">
+                        </div>
                     </div>
                 `;
-                
-                roundDiv.appendChild(matchBox);
-                nextRoundTeams.push('TBD');
+                bracketDiv.appendChild(thirdPlaceDiv);
             }
-            
-            bracketDiv.appendChild(roundDiv);
-            roundTeams = nextRoundTeams;
+
+            saveToStorage();
+            window.scrollTo(0, document.getElementById('bracketContainer').offsetTop - 50);
         }
 
-        // Scroll to bracket
-        document.getElementById('bracketWrapper').scrollIntoView({ behavior: 'smooth' });
-        saveToStorage();
-    }
-
-    function updateWinner(matchId) {
-        const row1 = document.getElementById(`${matchId}t1`);
-        const row2 = document.getElementById(`${matchId}t2`);
-        const score1 = row1.querySelector('.score-input')?.value;
-        const score2 = row2.querySelector('.score-input')?.value;
-        const team1 = row1.querySelector('.team-name-input').value;
-        const team2 = row2.querySelector('.team-name-input').value;
-        
-        row1.classList.remove('winner');
-        row2.classList.remove('winner');
-        
-        if (score1 && score2) {
-            const s1 = parseInt(score1);
-            const s2 = parseInt(score2);
+        function updateWinner(matchId) {
+            const score1 = document.getElementById(`${matchId}s1`).value;
+            const score2 = document.getElementById(`${matchId}s2`)?.value;
+            const team1 = document.querySelector(`#${matchId}t1 input[type="text"]`).value;
+            const team2 = document.querySelector(`#${matchId}t2 input[type="text"]`).value;
             
-            if (s1 > s2) {
-                row1.classList.add('winner');
-                advanceTeam(matchId, team1);
-            } else if (s2 > s1) {
-                row2.classList.add('winner');
-                advanceTeam(matchId, team2);
+            // Remove previous winner classes
+            document.getElementById(`${matchId}t1`).classList.remove('winner');
+            document.getElementById(`${matchId}t2`).classList.remove('winner');
+            
+            if (score1 && score2) {
+                const s1 = parseInt(score1);
+                const s2 = parseInt(score2);
+                
+                if (s1 > s2) {
+                    document.getElementById(`${matchId}t1`).classList.add('winner');
+                    advanceWinner(matchId, team1);
+                } else if (s2 > s1) {
+                    document.getElementById(`${matchId}t2`).classList.add('winner');
+                    advanceWinner(matchId, team2);
+                }
+                
+                checkChampion();
             }
+            
+            saveToStorage();
+        }
+
+        function advanceWinner(matchId, winnerName) {
+            // Parse round and match number
+            const round = parseInt(matchId.match(/r(\d+)/)[1]);
+            const match = parseInt(matchId.match(/m(\d+)/)[1]);
+            
+            // Calculate next round position
+            const nextRound = round + 1;
+            const nextMatch = Math.floor(match / 2);
+            const isTop = match % 2 === 0;
+            
+            // Find next match input
+            const nextMatchId = `r${nextRound}m${nextMatch}`;
+            const nextMatchTeam = isTop ? `${nextMatchId}t1` : `${nextMatchId}t2`;
+            
+            const nextInput = document.querySelector(`#${nextMatchTeam} input[type="text"]`);
+            if (nextInput) {
+                nextInput.value = winnerName;
+                nextInput.style.color = '#fbbf24';
+                setTimeout(() => nextInput.style.color = '', 500);
+            }
+            
+            // Update 3rd place if semi final
+            if (round === currentBracket.length - 2) { // Semi final
+                const loserName = isTop ? 
+                    document.querySelector(`#${matchId}t2 input[type="text"]`).value :
+                    document.querySelector(`#${matchId}t1 input[type="text"]`).value;
+                
+                const thirdInput = match === 0 ? 
+                    document.querySelector('#third1 input[type="text"]') :
+                    document.querySelector('#third2 input[type="text"]');
+                if (thirdInput) thirdInput.value = loserName;
+            }
+        }
+
+        function updateMatch(matchId) {
+            saveToStorage();
+        }
+
+        function checkChampion() {
+            const finalRound = currentBracket[currentBracket.length - 1];
+            if (!finalRound) return;
+            
+            const finalMatch = finalRound[0];
+            const t1 = document.getElementById(`${finalMatch.id}t1`);
+            const t2 = document.getElementById(`${finalMatch.id}t2`);
+            
+            if (t1.classList.contains('winner') || t2.classList.contains('winner')) {
+                const winner = t1.classList.contains('winner') ? 
+                    document.querySelector(`#${finalMatch.id}t1 input[type="text"]`).value :
+                    document.querySelector(`#${finalMatch.id}t2 input[type="text"]`).value;
+                
+                document.getElementById('championName').textContent = winner;
+                document.getElementById('championDisplay').style.display = 'block';
+            }
+        }
+
+        function saveToStorage() {
+            const data = {
+                name: document.getElementById('tournamentName').value,
+                teams: Array.from(document.querySelectorAll('.team-input input[type="text"]')).map(i => i.value),
+                bracket: captureBracketData(),
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('gffc_tournament', JSON.stringify(data));
+            
+            // Show save indicator
+            const status = document.getElementById('saveStatus');
+            status.style.display = 'block';
+            setTimeout(() => status.style.display = 'none', 2000);
+        }
+
+        function captureBracketData() {
+            const data = [];
+            document.querySelectorAll('.round').forEach((round, rIdx) => {
+                const roundData = [];
+                round.querySelectorAll('.match').forEach((match, mIdx) => {
+                    const inputs = match.querySelectorAll('input');
+                    roundData.push({
+                        team1: inputs[0]?.value || '',
+                        score1: inputs[1]?.value || '',
+                        team2: inputs[2]?.value || '',
+                        score2: inputs[3]?.value || ''
+                    });
+                });
+                if (roundData.length > 0) data.push(roundData);
+            });
+            return data;
+        }
+
+        function restoreBracketData(data) {
+            if (!data) return;
+            const rounds = document.querySelectorAll('.round');
+            data.forEach((roundData, rIdx) => {
+                if (rounds[rIdx]) {
+                    const matches = rounds[rIdx].querySelectorAll('.match');
+                    roundData.forEach((matchData, mIdx) => {
+                        if (matches[mIdx]) {
+                            const inputs = matches[mIdx].querySelectorAll('input');
+                            if (inputs[0]) inputs[0].value = matchData.team1 || '';
+                            if (inputs[1]) inputs[1].value = matchData.score1 || '';
+                            if (inputs[2]) inputs[2].value = matchData.team2 || '';
+                            if (inputs[3]) inputs[3].value = matchData.score2 || '';
+                            
+                            // Restore winner highlighting
+                            if (matchData.score1 && matchData.score2) {
+                                const s1 = parseInt(matchData.score1);
+                                const s2 = parseInt(matchData.score2);
+                                if (s1 > s2) inputs[0].parentElement.classList.add('winner');
+                                if (s2 > s1) inputs[2].parentElement.classList.add('winner');
+                            }
+                        }
+                    });
+                }
+            });
             checkChampion();
         }
-        saveToStorage();
-    }
 
-    function advanceTeam(matchId, winner) {
-        // Parse round and match
-        const round = parseInt(matchId.match(/r(\d+)/)[1]);
-        const match = parseInt(matchId.match(/m(\d+)/)[1]);
-        
-        const nextRound = round + 1;
-        const nextMatch = Math.floor(match / 2);
-        const isTop = match % 2 === 0;
-        
-        const nextId = `r${nextRound}m${nextMatch}t${isTop ? '1' : '2'}`;
-        const nextInput = document.querySelector(`#${nextId} .team-name-input`);
-        
-        if (nextInput && nextInput.value === 'TBD') {
-            nextInput.value = winner;
-            nextInput.style.color = '#10b981';
-            setTimeout(() => nextInput.style.color = '', 1000);
-        }
-    }
-
-    function checkChampion() {
-        const finals = document.querySelectorAll('.round-column:last-child .match-team-row.winner');
-        if (finals.length > 0) {
-            const winner = finals[0].querySelector('.team-name-input').value;
-            document.getElementById('championName').textContent = winner;
-            document.getElementById('championDisplay').style.display = 'block';
-        }
-    }
-
-    function saveToStorage() {
-        const data = {
-            name: document.getElementById('tournamentName').value,
-            teams: currentTeams,
-            timestamp: new Date().toISOString()
-        };
-        localStorage.setItem('gffc_bracket', JSON.stringify(data));
-    }
-
-    function clearBracket() {
-        if (confirm('Clear all bracket data?')) {
-            localStorage.removeItem('gffc_bracket');
-            document.getElementById('bracketWrapper').style.display = 'none';
-            document.getElementById('teamInputs').innerHTML = '';
-            document.getElementById('teamCount').value = 22;
-        }
-    }
-
-    function exportData() {
-        const data = localStorage.getItem('gffc_bracket');
-        if (!data) return alert('No data to save!');
-        const blob = new Blob([data], {type: 'application/json'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `tournament_${new Date().toISOString().split('T')[0]}.json`;
-        a.click();
-    }
-
-    function importData(input) {
-        const file = input.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                const data = JSON.parse(e.target.result);
-                localStorage.setItem('gffc_bracket', JSON.stringify(data));
+        function clearBracket() {
+            if (confirm('Clear all data? This cannot be undone.')) {
+                localStorage.removeItem('gffc_tournament');
                 location.reload();
-            } catch (err) {
-                alert('Invalid file');
             }
-        };
-        reader.readAsText(file);
-    }
-
-    // Load on startup
-    window.addEventListener('load', () => {
-        const saved = localStorage.getItem('gffc_bracket');
-        if (saved) {
-            const data = JSON.parse(saved);
-            document.getElementById('tournamentName').value = data.name || '';
-            if (data.teams) {
-                document.getElementById('teamCount').value = data.teams.length;
-                generateTeamInputs();
-                // Restore team names
-                data.teams.forEach((team, idx) => {
-                    const input = document.getElementById(`team${idx}`);
-                    if (input) input.value = team;
-                });
-            }
-        } else {
-            generateTeamInputs(); // Default 22 teams
         }
-    });
-</script>
+
+        function exportData() {
+            const data = localStorage.getItem('gffc_tournament');
+            if (!data) {
+                alert('No data to export!');
+                return;
+            }
+            const blob = new Blob([data], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `gffc_tournament_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+        }
+
+        function importData(input) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    localStorage.setItem('gffc_tournament', JSON.stringify(data));
+                    location.reload();
+                } catch (err) {
+                    alert('Invalid file format!');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Auto-save every 30 seconds
+        setInterval(saveToStorage, 30000);
+    </script>
+</body>
+</html>
